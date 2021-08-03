@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/RefreshButton"
         android:background="@color/cBlackLight"
         android:orientation="vertical"
         android:gravity="center"
@@ -12,7 +14,6 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/RefreshButton"
             android:src="@drawable/marvel_logo"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
@@ -20,6 +21,7 @@
 
         <TextView
             android:textColor="@color/cWhiteLight"
+            android:textStyle="bold"
             android:textSize="12sp"
             android:padding="5dp"
             android:text="request: v1/public/characters"
@@ -27,16 +29,13 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecView"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="20dp">
 
-        <LinearLayout
-            android:id="@+id/ListLay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
