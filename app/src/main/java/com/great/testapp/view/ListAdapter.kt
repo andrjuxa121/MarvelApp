@@ -48,8 +48,8 @@ class ListAdapter(private val context: Context, private val characters: MutableL
             LinearLayout.LayoutParams.MATCH_PARENT, // width
             LinearLayout.LayoutParams.WRAP_CONTENT  // height
         )
-        val dp20 = context.resources.getDimension(R.dimen.dp20).toInt()
-        layParams.setMargins(dp20, 0, dp20, dp20)
+        val dp10 = context.resources.getDimension(R.dimen.dp10).toInt()
+        layParams.setMargins(dp10, dp10, dp10, 0)
         return layParams
     }
 }

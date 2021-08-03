@@ -2,7 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.TestApp" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/cWhiteLight</item>
-        <item name="colorPrimaryVariant">@color/cWhiteDark</item>
+        <item name="colorPrimary">@color/cBlackLight</item>
+        <item name="colorPrimaryVariant">@color/cBlackDark</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 </resources>
