@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/cWhiteLight"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/Image"
+            android:src="@drawable/incognito"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10">
+
+            <TextView
+                style="@style/text_bold"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Name:"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"/>
+
+            <TextView
+                android:id="@+id/Name"
+                style="@style/text_main"
+                android:padding="5dp"
+                android:text="@string/NoInformation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginStart="@dimen/dp10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/text_bold"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Realname:"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"/>
+
+            <TextView
+                android:id="@+id/Realname"
+                style="@style/text_main"
+                android:padding="5dp"
+                android:text="@string/NoInformation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginStart="@dimen/dp10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/text_bold"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Team:"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"/>
+
+            <TextView
+                android:id="@+id/Team"
+                style="@style/text_main"
+                android:padding="5dp"
+                android:text="@string/NoInformation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginStart="@dimen/dp10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/text_bold"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="First apperance:"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"/>
+
+            <TextView
+                android:id="@+id/FirstApperance"
+                style="@style/text_main"
+                android:padding="5dp"
+                android:text="@string/NoInformation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginStart="@dimen/dp10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/text_bold"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Created by:"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"/>
+
+            <TextView
+                android:id="@+id/CreatedBy"
+                style="@style/text_main"
+                android:padding="5dp"
+                android:text="@string/NoInformation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginStart="@dimen/dp10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/text_bold"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Bio:"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"/>
+
+            <TextView
+                android:id="@+id/Bio"
+                style="@style/text_main"
+                android:padding="5dp"
+                android:text="@string/NoInformation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginStart="@dimen/dp10"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
