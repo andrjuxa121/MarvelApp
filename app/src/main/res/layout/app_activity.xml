@@ -33,19 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/ListFrag"
-            android:name="com.great.testapp.fragment.ListFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="50"/>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/ListFrag"
+                android:name="com.great.testapp.fragment.ListFragment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50"/>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/DetailsFrag"
-            android:name="com.great.testapp.fragment.DetailsFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="50"/>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/DetailsFrag"
+                android:name="com.great.testapp.fragment.DetailsFragment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50"/>
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

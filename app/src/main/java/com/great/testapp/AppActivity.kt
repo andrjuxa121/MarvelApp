@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.great.testapp.fragment.EmptyFragment
 import com.great.testapp.fragment.DetailsFragment
 import com.great.testapp.fragment.ListFragment
 import com.great.testapp.model.Character
@@ -28,6 +29,7 @@ class AppActivity: AppCompatActivity() {
     val SharedModel: SharedViewModel by viewModels()
     private lateinit var ListFrag: ListFragment
     private lateinit var DetailsFrag: DetailsFragment
+    private lateinit var EmptyFrag: EmptyFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,24 +50,16 @@ class AppActivity: AppCompatActivity() {
         refreshButton.setOnClickListener {
             loadCharacters()
         }
+    }
 
-//        Service = RetroBuilder.getInstance(BaseUrl).create(RetroService::class.java)
-//
-//        RecView = findViewById(R.id.RecView)
-//        RecView.setHasFixedSize(true)
-//
-//        LayManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-//        RecView.layoutManager = LayManager
-//
-//        Dialog = SpotsDialog.Builder().
-//            setCancelable(true).
-//            setContext(this).
-//            build()
-//
-//        val refreshButton: LinearLayout = findViewById(R.id.RefreshButton)
-//        refreshButton.setOnClickListener {
-//            loadCharacters()
-//        }
+    override fun onBackPressed() {
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if(SharedModel.getPortPage().value == SharedViewModel.Pages.DETAILS_PAGE) {
+                updatePage(SharedViewModel.Pages.LIST_PAGE)
+                return
+            }
+        }
+        super.onBackPressed()
     }
 
     private fun initFragments() {
@@ -77,43 +71,25 @@ class AppActivity: AppCompatActivity() {
         }
         ListFrag = supportFragmentManager.findFragmentById(R.id.ListFrag) as ListFragment
         DetailsFrag = supportFragmentManager.findFragmentById(R.id.DetailsFrag) as DetailsFragment
-    }
-    private fun updatePage(portPage: SharedViewModel.Pages) {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.MainLay, getPageFragment(portPage))
-                .commit()
-        }
-    }
-    private fun getPageFragment(portPage: SharedViewModel.Pages): Fragment {
-        return when(portPage) {
-            SharedViewModel.Pages.LIST_PAGE -> ListFrag
-            SharedViewModel.Pages.DETAILS_PAGE -> DetailsFrag
-        }
+        EmptyFrag = EmptyFragment()
     }
 
-//    private fun loadCharacters() {
-//        Dialog.show()
-//        Service.getCharacters().enqueue(object: Callback<MutableList<Character>> {
-//            override fun onFailure(call: Call<MutableList<Character>>, t: Throwable) {
-//                Toast.makeText(this@AppActivity,
-//                    "Internet connection lost", Toast.LENGTH_LONG).show()
-//                Dialog.dismiss()
-//            }
-//            override fun onResponse(
-//                call: Call<MutableList<Character>>,
-//                response: Response<MutableList<Character>>) {
-//
-//                val characters = response.body() as MutableList<Character>
-//                Adapter = ListAdapter(this@AppActivity, characters)
-//                Adapter.notifyDataSetChanged()
-//                RecView.adapter = Adapter
-//
-//                Dialog.dismiss()
-//            }
-//        })
-//    }
+    private fun updatePage(portPage: SharedViewModel.Pages) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.MainLay, getPageFragment(portPage))
+            //.addToBackStack(null)
+            .commit()
+    }
+    private fun getPageFragment(portPage: SharedViewModel.Pages): Fragment {
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return when (portPage) {
+                SharedViewModel.Pages.LIST_PAGE -> ListFrag
+                SharedViewModel.Pages.DETAILS_PAGE -> DetailsFrag
+            }
+        }
+        return EmptyFrag
+    }
 
     private fun loadCharacters() {
         Dialog.show()
