@@ -41,6 +41,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828' // image loader
     implementation 'com.github.d-max:spots-dialog:1.1@aar' // loading dialog
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1") // view model
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1") // live data
+
     implementation "androidx.activity:activity-ktx:1.3.0" // for viewModels()
     implementation "androidx.fragment:fragment-ktx:1.3.6" // for viewModels()
 

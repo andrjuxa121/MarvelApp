@@ -1,4 +1,4 @@
-package com.great.testapp.view
+package com.great.testapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,22 +7,29 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.great.testapp.R
 import com.great.testapp.model.Character
 import com.squareup.picasso.Picasso
 
-class ListAdapter(private val context: Context, private val characters: MutableList<Character>):
+class ListAdapter(private val context: Context, private val characters: List<Character>):
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
-    class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    interface iListener {
+        fun onClick(character: Character)
+    }
+    private var Listener: iListener? = null
+    fun setListener(listener: iListener) {
+        Listener = listener
+    }
+
+    inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val Image: ImageView = itemView.findViewById(R.id.Image)
         val Text: TextView = itemView.findViewById(R.id.Text)
 
-        fun setListener() {
+        fun setListener(character: Character) {
             itemView.setOnClickListener {
-                Toast.makeText(it.context, Text.text.toString(), Toast.LENGTH_SHORT).show()
+                Listener?.onClick(character)
             }
         }
     }
@@ -37,7 +44,7 @@ class ListAdapter(private val context: Context, private val characters: MutableL
         val character = characters[id]
         Picasso.get().load(character.imageurl).into(holder.Image)
         holder.Text.setText(character.name)
-        holder.setListener()
+        holder.setListener(character)
     }
     override fun getItemCount(): Int {
         return characters.size
