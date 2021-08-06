@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.great.testapp.R
 import com.great.testapp.utils.Formater
 import com.great.testapp.view_model.SharedViewModel
@@ -22,22 +21,22 @@ class DetailsFragment: Fragment() {
 
         val layView = inflater.inflate(R.layout.fragment_details, container, false)
         val image: ImageView = layView.findViewById(R.id.Image)
+        val id: TextView = layView.findViewById(R.id.Id)
         val name: TextView = layView.findViewById(R.id.Name)
-        val realname: TextView = layView.findViewById(R.id.Realname)
-        val team: TextView = layView.findViewById(R.id.Team)
-        val firstAppearance: TextView = layView.findViewById(R.id.FirstAppearance)
-        val createdBy: TextView = layView.findViewById(R.id.CreatedBy)
-        val bio: TextView = layView.findViewById(R.id.Bio)
+        val description: TextView = layView.findViewById(R.id.Description)
+        val comics: TextView = layView.findViewById(R.id.Comics)
 
         val sharedModel: SharedViewModel by activityViewModels()
         sharedModel.getCharacter().observe(requireActivity(), { character ->
             Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(image)
+            id.setText(character.id.toString())
             name.setText(character.name)
-//            realname.setText(character.realname)
-//            team.setText(character.team)
-//            firstAppearance.setText(character.firstappearance)
-//            createdBy.setText(character.createdby)
-            bio.setText(character.description)
+            description.setText(character.description)
+            var nameOfComics = ""
+            character.comics?.items?.forEachIndexed { index, item ->
+                nameOfComics += "${index+1}. ${item.name}\n"
+            }
+            comics.setText(nameOfComics)
         })
         return layView
     }
