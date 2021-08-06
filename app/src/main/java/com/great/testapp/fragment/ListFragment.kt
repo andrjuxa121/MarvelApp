@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.great.testapp.R
@@ -29,12 +28,14 @@ class ListFragment: Fragment() {
 
         val sharedModel: SharedViewModel by activityViewModels()
         sharedModel.getCharacters().observe(requireActivity(), { characters ->
+            if(!isAdded) return@observe // if fragment no added to an activity
+
             val listAdapter = ListAdapter(requireActivity(), characters)
             listAdapter.notifyDataSetChanged()
             listAdapter.setListener(object: ListAdapter.iListener {
                 override fun onClick(character: Character) {
                     sharedModel.apply {
-                        selectCharacter(character)
+                        setCharacter(character)
                         setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
                     }
                 }

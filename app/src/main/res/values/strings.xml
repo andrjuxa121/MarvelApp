@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TestApp</string>
+    <string name="NoResponse">Data not received. Make sure you have a good Internet connection.</string>
     <string name="NoInformation">No information</string>
 </resources>

@@ -27,16 +27,24 @@ class DetailsFragment: Fragment() {
         val comics: TextView = layView.findViewById(R.id.Comics)
 
         val sharedModel: SharedViewModel by activityViewModels()
-        sharedModel.getCharacter().observe(requireActivity(), { character ->
-            Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(image)
-            id.setText(character.id.toString())
-            name.setText(character.name)
-            description.setText(character.description)
-            var nameOfComics = ""
-            character.comics?.items?.forEachIndexed { index, item ->
-                nameOfComics += "${index+1}. ${item.name}\n"
+        sharedModel.getCharacter().observe(requireActivity(), { nCharacter ->
+            nCharacter?.let { character ->
+                Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(image)
+                id.setText(character.id.toString())
+                name.setText(character.name)
+                description.setText(character.description)
+                var nameOfComics = ""
+                character.comics?.items?.forEachIndexed { index, item ->
+                    nameOfComics += "${index+1}. ${item.name}\n"
+                }
+                comics.setText(nameOfComics)
+                return@observe
             }
-            comics.setText(nameOfComics)
+            image.setImageResource(R.drawable.image_not_found)
+            id.setText(getString(R.string.NoInformation))
+            name.setText(getString(R.string.NoInformation))
+            description.setText(getString(R.string.NoInformation))
+            comics.setText(getString(R.string.NoInformation))
         })
         return layView
     }

@@ -1,7 +1,6 @@
 package com.great.testapp
 
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.ActivityInfo
@@ -9,6 +8,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Surface
 import android.view.WindowManager
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -55,6 +56,11 @@ class AppActivity: AppCompatActivity() {
         val refreshButton: LinearLayout = findViewById(R.id.RefreshButton)
         refreshButton.setOnClickListener {
             loadCharacters()
+        }
+        val input: EditText = findViewById(R.id.Input)
+        val searchButton: ImageView = findViewById(R.id.SearchButton)
+        searchButton.setOnClickListener {
+            loadCharacter(input.text.toString().toInt())
         }
     }
 
@@ -103,7 +109,7 @@ class AppActivity: AppCompatActivity() {
         Service.getCharacters().enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 Toast.makeText(this@AppActivity,
-                    "Internet connection lost", Toast.LENGTH_LONG).show()
+                    getString(R.string.NoResponse), Toast.LENGTH_LONG).show()
                 Dialog.dismiss()
                 unlockOrientation()
             }
@@ -119,8 +125,32 @@ class AppActivity: AppCompatActivity() {
             }
         })
     }
+    private fun loadCharacter(id: Int) {
+        lockOrientation() // no rotation on loading
+        Dialog.show()
+        Service.getCharacter(id).enqueue(object: Callback<DataWrapper> {
+            override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
+                Toast.makeText(this@AppActivity,
+                    getString(R.string.NoResponse), Toast.LENGTH_LONG).show()
+                Dialog.dismiss()
+                unlockOrientation()
+            }
+            override fun onResponse(
+                call: Call<DataWrapper>,
+                response: Response<DataWrapper>) {
 
-    fun lockOrientation() {
+                val dataWrapper = response.body()
+                val character = dataWrapper?.data?.results?.get(0)
+                SharedModel.setCharacter(character)
+
+                Dialog.dismiss()
+                unlockOrientation()
+                SharedModel.setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
+            }
+        })
+    }
+
+    private fun lockOrientation() {
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
         val rotation: Int = display.rotation
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -135,7 +165,7 @@ class AppActivity: AppCompatActivity() {
                 ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             else ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
     }
-    fun unlockOrientation() {
+    private fun unlockOrientation() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 }

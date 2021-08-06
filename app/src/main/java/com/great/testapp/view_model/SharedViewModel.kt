@@ -11,7 +11,7 @@ class SharedViewModel: ViewModel() {
     }
     private var PortPage = MutableLiveData<Pages>()
     private val Characters = MutableLiveData<List<Character>>()
-    private var SelectedCharacter = MutableLiveData<Character>()
+    private var Character = MutableLiveData<Character?>()
     init {
         PortPage.value = Pages.LIST_PAGE
     }
@@ -28,10 +28,10 @@ class SharedViewModel: ViewModel() {
     fun getCharacters(): MutableLiveData<List<Character>> {
         return Characters
     }
-    fun selectCharacter(character: Character) {
-        SelectedCharacter.value = character
+    fun setCharacter(character: Character?) {
+        Character.value = character
     }
-    fun getCharacter(): MutableLiveData<Character> {
-        return SelectedCharacter
+    fun getCharacter(): MutableLiveData<Character?> {
+        return Character
     }
 }
