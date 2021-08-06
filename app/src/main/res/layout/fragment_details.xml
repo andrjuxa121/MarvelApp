@@ -12,7 +12,7 @@
 
         <ImageView
             android:id="@+id/Image"
-            android:src="@drawable/incognito"
+            android:src="@drawable/image_not_found"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:layout_width="match_parent"

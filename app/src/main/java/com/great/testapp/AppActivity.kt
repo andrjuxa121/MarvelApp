@@ -1,28 +1,34 @@
 package com.great.testapp
 
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.Surface
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.great.testapp.fragment.EmptyFragment
 import com.great.testapp.fragment.DetailsFragment
+import com.great.testapp.fragment.EmptyFragment
 import com.great.testapp.fragment.ListFragment
-import com.great.testapp.model.Character
+import com.great.testapp.model.DataWrapper
 import com.great.testapp.retrofit.RetroBuilder
 import com.great.testapp.retrofit.RetroService
+import com.great.testapp.utils.Constant
 import com.great.testapp.view_model.SharedViewModel
 import dmax.dialog.SpotsDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class AppActivity: AppCompatActivity() {
-    private val BASE_URL = "https://www.simplifiedcoding.net/demos/"
     private lateinit var Service: RetroService
     private lateinit var Dialog: AlertDialog
 
@@ -40,11 +46,11 @@ class AppActivity: AppCompatActivity() {
         })
         initFragments()
 
-        Service = RetroBuilder.getInstance(BASE_URL).create(RetroService::class.java)
-        Dialog = SpotsDialog.Builder().
-            setCancelable(true).
-            setContext(this).
-            build()
+        Service = RetroBuilder.getInstance(Constant.BASE_URL).create(RetroService::class.java)
+        Dialog = SpotsDialog.Builder()
+            .setCancelable(true)
+            .setContext(this)
+            .build()
 
         val refreshButton: LinearLayout = findViewById(R.id.RefreshButton)
         refreshButton.setOnClickListener {
@@ -92,21 +98,44 @@ class AppActivity: AppCompatActivity() {
     }
 
     private fun loadCharacters() {
+        lockOrientation() // no rotation on loading
         Dialog.show()
-        Service.getCharacters().enqueue(object: Callback<MutableList<Character>> {
-            override fun onFailure(call: Call<MutableList<Character>>, t: Throwable) {
+        Service.getCharacters().enqueue(object: Callback<DataWrapper> {
+            override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 Toast.makeText(this@AppActivity,
                     "Internet connection lost", Toast.LENGTH_LONG).show()
                 Dialog.dismiss()
+                unlockOrientation()
             }
             override fun onResponse(
-                call: Call<MutableList<Character>>,
-                response: Response<MutableList<Character>>) {
+                call: Call<DataWrapper>,
+                response: Response<DataWrapper>) {
 
-                val characters = response.body() as MutableList<Character>
+                val dataWrapper = response.body() as DataWrapper
+                val characters = dataWrapper.data!!.results!!
                 SharedModel.setCharacters(characters)
                 Dialog.dismiss()
+                unlockOrientation()
             }
         })
+    }
+
+    fun lockOrientation() {
+        val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        val rotation: Int = display.rotation
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            requestedOrientation =
+                if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_270)
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                else ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+            return
+        }
+        requestedOrientation =
+            if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_90)
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            else ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+    }
+    fun unlockOrientation() {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 }

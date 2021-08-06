@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.great.testapp.R
 import com.great.testapp.model.Character
+import com.great.testapp.utils.Formater
 import com.squareup.picasso.Picasso
 
 class ListAdapter(private val context: Context, private val characters: List<Character>):
@@ -42,7 +43,7 @@ class ListAdapter(private val context: Context, private val characters: List<Cha
     }
     override fun onBindViewHolder(holder: ListViewHolder, id: Int) {
         val character = characters[id]
-        Picasso.get().load(character.imageurl).into(holder.Image)
+        Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(holder.Image)
         holder.Text.setText(character.name)
         holder.setListener(character)
     }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.great.testapp.R
+import com.great.testapp.utils.Formater
 import com.great.testapp.view_model.SharedViewModel
 import com.squareup.picasso.Picasso
 
@@ -30,13 +31,13 @@ class DetailsFragment: Fragment() {
 
         val sharedModel: SharedViewModel by activityViewModels()
         sharedModel.getCharacter().observe(requireActivity(), { character ->
-            Picasso.get().load(character.imageurl).into(image)
+            Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(image)
             name.setText(character.name)
-            realname.setText(character.realname)
-            team.setText(character.team)
-            firstAppearance.setText(character.firstappearance)
-            createdBy.setText(character.createdby)
-            bio.setText(character.bio)
+//            realname.setText(character.realname)
+//            team.setText(character.team)
+//            firstAppearance.setText(character.firstappearance)
+//            createdBy.setText(character.createdby)
+            bio.setText(character.description)
         })
         return layView
     }
