@@ -27,8 +27,7 @@ class ListFragment: Fragment() {
         recView.setHasFixedSize(true)
 
         val sharedModel: SharedViewModel by activityViewModels()
-        sharedModel.getCharacters().observe(requireActivity(), { characters ->
-            if(!isAdded) return@observe // if fragment no added to an activity
+        sharedModel.getCharacters().observe(viewLifecycleOwner, { characters ->
 
             val listAdapter = ListAdapter(requireActivity(), characters)
             listAdapter.notifyDataSetChanged()

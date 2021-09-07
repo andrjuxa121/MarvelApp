@@ -27,7 +27,7 @@ class DetailsFragment: Fragment() {
         val comics: TextView = layView.findViewById(R.id.Comics)
 
         val sharedModel: SharedViewModel by activityViewModels()
-        sharedModel.getCharacter().observe(requireActivity(), { nCharacter ->
+        sharedModel.getCharacter().observe(viewLifecycleOwner, { nCharacter ->
             nCharacter?.let { character ->
                 Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(image)
                 id.setText(character.id.toString())

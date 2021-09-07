@@ -9,8 +9,8 @@ class Constant {
         const val BASE_URL = "https://gateway.marvel.com/v1/public/"
         val TIME_STAMP = Timestamp(System.currentTimeMillis()).time.toString()
 
-        const val PUBLIC_KEY = "0***3"
-        const val PRIVATE_KEY = "a***9"
+        const val PUBLIC_KEY = "0***3" //0***3
+        const val PRIVATE_KEY = "a***9" //a***9
         const val LIMIT = "20"
 
         fun getApiKey(): String {

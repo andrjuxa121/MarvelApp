@@ -114,14 +114,15 @@ class AppActivity: AppCompatActivity() {
                 unlockOrientation()
             }
             override fun onResponse(
-                call: Call<DataWrapper>,
-                response: Response<DataWrapper>) {
+                call: Call<DataWrapper?>,
+                response: Response<DataWrapper?>) {
 
-                val dataWrapper = response.body() as DataWrapper
-                val characters = dataWrapper.data!!.results!!
-                SharedModel.setCharacters(characters)
-                Dialog.dismiss()
-                unlockOrientation()
+                response.body()?.let { dataWrapper ->
+                    val characters = dataWrapper.data!!.results!!
+                    SharedModel.setCharacters(characters)
+                    Dialog.dismiss()
+                    unlockOrientation()
+                }
             }
         })
     }
