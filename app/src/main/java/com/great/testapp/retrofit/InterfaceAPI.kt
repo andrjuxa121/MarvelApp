@@ -1,6 +1,5 @@
 package com.great.testapp.retrofit
 
-import com.great.testapp.model.Character
 import com.great.testapp.model.DataWrapper
 import com.great.testapp.utils.Constant
 import retrofit2.Call
@@ -8,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface RetroService {
+interface InterfaceAPI {
     @GET("characters")
     fun getCharacters(
         @Query("ts") timeStamp: String = Constant.TIME_STAMP,

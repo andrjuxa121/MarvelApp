@@ -19,8 +19,8 @@ import com.great.testapp.fragment.DetailsFragment
 import com.great.testapp.fragment.EmptyFragment
 import com.great.testapp.fragment.ListFragment
 import com.great.testapp.model.DataWrapper
-import com.great.testapp.retrofit.RetroBuilder
-import com.great.testapp.retrofit.RetroService
+import com.great.testapp.retrofit.RetrofitBuilder
+import com.great.testapp.retrofit.InterfaceAPI
 import com.great.testapp.utils.Constant
 import com.great.testapp.view_model.SharedViewModel
 import dmax.dialog.SpotsDialog
@@ -30,25 +30,25 @@ import retrofit2.Response
 
 
 class AppActivity: AppCompatActivity() {
-    private lateinit var Service: RetroService
-    private lateinit var Dialog: AlertDialog
+    private lateinit var apiService: InterfaceAPI
+    private lateinit var dialog: AlertDialog
 
-    val SharedModel: SharedViewModel by viewModels()
-    private lateinit var ListFrag: ListFragment
-    private lateinit var DetailsFrag: DetailsFragment
-    private lateinit var EmptyFrag: EmptyFragment
+    val sharedModel: SharedViewModel by viewModels()
+    private lateinit var listFragment: ListFragment
+    private lateinit var detailsFragment: DetailsFragment
+    private lateinit var emptyFragment: EmptyFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity)
 
-        SharedModel.getPortPage().observe(this, { portPage ->
+        sharedModel.getPortPage().observe(this, { portPage ->
             updatePage(portPage)
         })
         initFragments()
 
-        Service = RetroBuilder.getInstance(Constant.BASE_URL).create(RetroService::class.java)
-        Dialog = SpotsDialog.Builder()
+        apiService = RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(InterfaceAPI::class.java)
+        dialog = SpotsDialog.Builder()
             .setCancelable(true)
             .setContext(this)
             .build()
@@ -66,7 +66,7 @@ class AppActivity: AppCompatActivity() {
 
     override fun onBackPressed() {
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if(SharedModel.getPortPage().value == SharedViewModel.Pages.DETAILS_PAGE) {
+            if(sharedModel.getPortPage().value == SharedViewModel.Pages.DETAILS_PAGE) {
                 updatePage(SharedViewModel.Pages.LIST_PAGE)
                 return
             }
@@ -76,14 +76,14 @@ class AppActivity: AppCompatActivity() {
 
     private fun initFragments() {
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            ListFrag = ListFragment()
-            DetailsFrag = DetailsFragment()
+            listFragment = ListFragment()
+            detailsFragment = DetailsFragment()
             updatePage(SharedViewModel.Pages.LIST_PAGE)
             return
         }
-        ListFrag = supportFragmentManager.findFragmentById(R.id.ListFrag) as ListFragment
-        DetailsFrag = supportFragmentManager.findFragmentById(R.id.DetailsFrag) as DetailsFragment
-        EmptyFrag = EmptyFragment()
+        listFragment = supportFragmentManager.findFragmentById(R.id.ListFrag) as ListFragment
+        detailsFragment = supportFragmentManager.findFragmentById(R.id.DetailsFrag) as DetailsFragment
+        emptyFragment = EmptyFragment()
     }
 
     private fun updatePage(portPage: SharedViewModel.Pages) {
@@ -96,21 +96,21 @@ class AppActivity: AppCompatActivity() {
     private fun getPageFragment(portPage: SharedViewModel.Pages): Fragment {
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             return when (portPage) {
-                SharedViewModel.Pages.LIST_PAGE -> ListFrag
-                SharedViewModel.Pages.DETAILS_PAGE -> DetailsFrag
+                SharedViewModel.Pages.LIST_PAGE -> listFragment
+                SharedViewModel.Pages.DETAILS_PAGE -> detailsFragment
             }
         }
-        return EmptyFrag
+        return emptyFragment
     }
 
     private fun loadCharacters() {
         lockOrientation() // no rotation on loading
-        Dialog.show()
-        Service.getCharacters().enqueue(object: Callback<DataWrapper> {
+        dialog.show()
+        apiService.getCharacters().enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 Toast.makeText(this@AppActivity,
                     getString(R.string.NoResponse), Toast.LENGTH_LONG).show()
-                Dialog.dismiss()
+                dialog.dismiss()
                 unlockOrientation()
             }
             override fun onResponse(
@@ -119,8 +119,8 @@ class AppActivity: AppCompatActivity() {
 
                 response.body()?.let { dataWrapper ->
                     val characters = dataWrapper.data!!.results!!
-                    SharedModel.setCharacters(characters)
-                    Dialog.dismiss()
+                    sharedModel.setCharacters(characters)
+                    dialog.dismiss()
                     unlockOrientation()
                 }
             }
@@ -128,12 +128,12 @@ class AppActivity: AppCompatActivity() {
     }
     private fun loadCharacter(id: Int) {
         lockOrientation() // no rotation on loading
-        Dialog.show()
-        Service.getCharacter(id).enqueue(object: Callback<DataWrapper> {
+        dialog.show()
+        apiService.getCharacter(id).enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 Toast.makeText(this@AppActivity,
                     getString(R.string.NoResponse), Toast.LENGTH_LONG).show()
-                Dialog.dismiss()
+                dialog.dismiss()
                 unlockOrientation()
             }
             override fun onResponse(
@@ -142,11 +142,11 @@ class AppActivity: AppCompatActivity() {
 
                 val dataWrapper = response.body()
                 val character = dataWrapper?.data?.results?.get(0)
-                SharedModel.setCharacter(character)
+                sharedModel.selectCharacter(character)
 
-                Dialog.dismiss()
+                dialog.dismiss()
                 unlockOrientation()
-                SharedModel.setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
+                sharedModel.setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
             }
         })
     }

@@ -19,33 +19,35 @@ class DetailsFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View?{
 
-        val layView = inflater.inflate(R.layout.fragment_details, container, false)
-        val image: ImageView = layView.findViewById(R.id.Image)
-        val id: TextView = layView.findViewById(R.id.Id)
-        val name: TextView = layView.findViewById(R.id.Name)
-        val description: TextView = layView.findViewById(R.id.Description)
-        val comics: TextView = layView.findViewById(R.id.Comics)
+        return inflater.inflate(R.layout.fragment_details, container, false)
+    }
+
+    override fun onViewCreated(layView: View, savedInstanceState: Bundle?) {
+        val characterImage: ImageView = layView.findViewById(R.id.image)
+        val characterId: TextView = layView.findViewById(R.id.id)
+        val characterName: TextView = layView.findViewById(R.id.name)
+        val characterDescription: TextView = layView.findViewById(R.id.description)
+        val characterComics: TextView = layView.findViewById(R.id.comics)
 
         val sharedModel: SharedViewModel by activityViewModels()
-        sharedModel.getCharacter().observe(viewLifecycleOwner, { nCharacter ->
-            nCharacter?.let { character ->
-                Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(image)
-                id.setText(character.id.toString())
-                name.setText(character.name)
-                description.setText(character.description)
+        sharedModel.getSelectedCharacter().observe(viewLifecycleOwner, { nullCharacter ->
+            nullCharacter?.let { character ->
+                Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(characterImage)
+                characterId.setText(character.id.toString())
+                characterName.setText(character.name)
+                characterDescription.setText(character.description)
                 var nameOfComics = ""
                 character.comics?.items?.forEachIndexed { index, item ->
                     nameOfComics += "${index+1}. ${item.name}\n"
                 }
-                comics.setText(nameOfComics)
+                characterComics.setText(nameOfComics)
                 return@observe
             }
-            image.setImageResource(R.drawable.image_not_found)
-            id.setText(getString(R.string.NoInformation))
-            name.setText(getString(R.string.NoInformation))
-            description.setText(getString(R.string.NoInformation))
-            comics.setText(getString(R.string.NoInformation))
+            characterImage.setImageResource(R.drawable.image_not_found)
+            characterId.setText(getString(R.string.NoInformation))
+            characterName.setText(getString(R.string.NoInformation))
+            characterDescription.setText(getString(R.string.NoInformation))
+            characterComics.setText(getString(R.string.NoInformation))
         })
-        return layView
     }
 }

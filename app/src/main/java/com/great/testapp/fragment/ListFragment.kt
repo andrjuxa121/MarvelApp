@@ -15,34 +15,37 @@ import com.great.testapp.view_model.SharedViewModel
 
 
 class ListFragment: Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View?{
 
-        val layView = inflater.inflate(R.layout.fragment_list, container, false)
+        return inflater.inflate(R.layout.fragment_list, container, false)
+    }
 
-        val layManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
-        val recView: RecyclerView = layView.findViewById(R.id.RecView)
-        recView.layoutManager = layManager
-        recView.setHasFixedSize(true)
+    override fun onViewCreated(layView: View, savedInstanceState: Bundle?) {
+
+        val layManager = LinearLayoutManager(
+            requireActivity(), RecyclerView.VERTICAL, false)
+
+        val recyclerView: RecyclerView = layView.findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = layManager
+        recyclerView.setHasFixedSize(true)
 
         val sharedModel: SharedViewModel by activityViewModels()
         sharedModel.getCharacters().observe(viewLifecycleOwner, { characters ->
 
             val listAdapter = ListAdapter(requireActivity(), characters)
             listAdapter.notifyDataSetChanged()
-            listAdapter.setListener(object: ListAdapter.iListener {
+            listAdapter.initCharacterClickListener(object: ListAdapter.ICharacterClickListener {
                 override fun onClick(character: Character) {
                     sharedModel.apply {
-                        setCharacter(character)
+                        selectCharacter(character)
                         setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
                     }
                 }
             })
-            recView.adapter = listAdapter
+            recyclerView.adapter = listAdapter
         })
-        return layView
     }
-
-
 }

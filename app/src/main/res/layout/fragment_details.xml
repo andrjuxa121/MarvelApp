@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/Image"
+            android:id="@+id/image"
             android:src="@drawable/image_not_found"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
@@ -35,7 +35,7 @@
                 android:layout_weight="50"/>
 
             <TextView
-                android:id="@+id/Id"
+                android:id="@+id/id"
                 style="@style/text_main"
                 android:padding="5dp"
                 android:text="@string/NoInformation"
@@ -61,7 +61,7 @@
                 android:layout_weight="50"/>
 
             <TextView
-                android:id="@+id/Name"
+                android:id="@+id/name"
                 style="@style/text_main"
                 android:padding="5dp"
                 android:text="@string/NoInformation"
@@ -87,7 +87,7 @@
                 android:layout_weight="50"/>
 
             <TextView
-                android:id="@+id/Description"
+                android:id="@+id/description"
                 style="@style/text_main"
                 android:padding="5dp"
                 android:text="@string/NoInformation"
@@ -113,7 +113,7 @@
                 android:layout_weight="50"/>
 
             <TextView
-                android:id="@+id/Comics"
+                android:id="@+id/comics"
                 style="@style/text_main"
                 android:padding="5dp"
                 android:text="@string/NoInformation"
