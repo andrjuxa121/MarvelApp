@@ -1,8 +1,8 @@
-package com.great.testapp.view_model
+package com.great.app.view_model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.great.testapp.model.Character
+import com.great.app.model.Character
 
 class SharedViewModel: ViewModel() {
     // Active page in portrait mode

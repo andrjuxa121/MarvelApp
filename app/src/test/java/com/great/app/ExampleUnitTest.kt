@@ -1,4 +1,4 @@
-package com.great.testapp
+package com.great.app
 
 import org.junit.Test
 

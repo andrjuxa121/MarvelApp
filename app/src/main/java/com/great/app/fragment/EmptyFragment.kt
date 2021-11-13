@@ -1,11 +1,11 @@
-package com.great.testapp.fragment
+package com.great.app.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.great.testapp.R
+import com.great.app.R
 
 class EmptyFragment: Fragment() {
     override fun onCreateView(

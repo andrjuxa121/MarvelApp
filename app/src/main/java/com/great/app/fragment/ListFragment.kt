@@ -1,4 +1,4 @@
-package com.great.testapp.fragment
+package com.great.app.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.great.testapp.R
-import com.great.testapp.model.Character
-import com.great.testapp.adapter.ListAdapter
-import com.great.testapp.view_model.SharedViewModel
+import com.great.app.R
+import com.great.app.model.Character
+import com.great.app.adapter.ListAdapter
+import com.great.app.view_model.SharedViewModel
 
 
 class ListFragment: Fragment() {

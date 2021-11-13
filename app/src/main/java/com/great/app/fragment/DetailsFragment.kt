@@ -1,4 +1,4 @@
-package com.great.testapp.fragment
+package com.great.app.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.great.testapp.R
-import com.great.testapp.utils.Formater
-import com.great.testapp.view_model.SharedViewModel
+import com.great.app.R
+import com.great.app.utils.Formater
+import com.great.app.view_model.SharedViewModel
 import com.squareup.picasso.Picasso
 
 class DetailsFragment: Fragment() {

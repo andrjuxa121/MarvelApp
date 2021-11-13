@@ -1,4 +1,4 @@
-package com.great.testapp.model
+package com.great.app.model
 
 data class ComicList (
     var items: List<ComicSummary>? = null

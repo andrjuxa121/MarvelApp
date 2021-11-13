@@ -1,4 +1,4 @@
-package com.great.testapp
+package com.great.app
 
 
 import android.app.AlertDialog
@@ -15,14 +15,14 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.great.testapp.fragment.DetailsFragment
-import com.great.testapp.fragment.EmptyFragment
-import com.great.testapp.fragment.ListFragment
-import com.great.testapp.model.DataWrapper
-import com.great.testapp.retrofit.RetrofitBuilder
-import com.great.testapp.retrofit.InterfaceAPI
-import com.great.testapp.utils.Constant
-import com.great.testapp.view_model.SharedViewModel
+import com.great.app.fragment.DetailsFragment
+import com.great.app.fragment.EmptyFragment
+import com.great.app.fragment.ListFragment
+import com.great.app.model.DataWrapper
+import com.great.app.retrofit.RetrofitBuilder
+import com.great.app.retrofit.InterfaceAPI
+import com.great.app.utils.Constant
+import com.great.app.view_model.SharedViewModel
 import dmax.dialog.SpotsDialog
 import retrofit2.Call
 import retrofit2.Callback

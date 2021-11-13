@@ -1,4 +1,4 @@
-package com.great.testapp.utils
+package com.great.app.utils
 
 import java.math.BigInteger
 import java.security.MessageDigest

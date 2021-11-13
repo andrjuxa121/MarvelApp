@@ -1,7 +1,7 @@
-package com.great.testapp.retrofit
+package com.great.app.retrofit
 
-import com.great.testapp.model.DataWrapper
-import com.great.testapp.utils.Constant
+import com.great.app.model.DataWrapper
+import com.great.app.utils.Constant
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

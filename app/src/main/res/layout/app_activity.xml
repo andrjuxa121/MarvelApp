@@ -70,14 +70,14 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/ListFrag"
-                android:name="com.great.testapp.fragment.ListFragment"
+                android:name="com.great.app.fragment.ListFragment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="50"/>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/DetailsFrag"
-                android:name="com.great.testapp.fragment.DetailsFragment"
+                android:name="com.great.app.fragment.DetailsFragment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="50"/>

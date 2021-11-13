@@ -1,6 +1,6 @@
-package com.great.testapp.utils
+package com.great.app.utils
 
-import com.great.testapp.model.Image
+import com.great.app.model.Image
 
 class Formater {
     companion object {

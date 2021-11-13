@@ -1,4 +1,4 @@
-package com.great.testapp.adapter
+package com.great.app.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.great.testapp.R
-import com.great.testapp.model.Character
-import com.great.testapp.utils.Formater
+import com.great.app.R
+import com.great.app.model.Character
+import com.great.app.utils.Formater
 import com.squareup.picasso.Picasso
 
 class ListAdapter(private val context: Context, private val characters: List<Character>):

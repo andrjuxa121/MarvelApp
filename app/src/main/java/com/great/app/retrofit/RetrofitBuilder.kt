@@ -1,4 +1,4 @@
-package com.great.testapp.retrofit
+package com.great.app.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
