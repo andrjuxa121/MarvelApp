@@ -19,8 +19,8 @@ import com.great.app.fragment.DetailsFragment
 import com.great.app.fragment.EmptyFragment
 import com.great.app.fragment.ListFragment
 import com.great.app.model.DataWrapper
-import com.great.app.retrofit.RetrofitBuilder
-import com.great.app.retrofit.InterfaceAPI
+import com.great.app.repository.retrofit.RetrofitBuilder
+import com.great.app.repository.retrofit.ApiService
 import com.great.app.utils.Constant
 import com.great.app.view_model.SharedViewModel
 import dmax.dialog.SpotsDialog
@@ -30,7 +30,7 @@ import retrofit2.Response
 
 
 class AppActivity: AppCompatActivity() {
-    private lateinit var apiService: InterfaceAPI
+    private lateinit var apiService: ApiService
     private lateinit var dialog: AlertDialog
 
     val sharedModel: SharedViewModel by viewModels()
@@ -47,7 +47,7 @@ class AppActivity: AppCompatActivity() {
         })
         initFragments()
 
-        apiService = RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(InterfaceAPI::class.java)
+        apiService = RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(ApiService::class.java)
         dialog = SpotsDialog.Builder()
             .setCancelable(true)
             .setContext(this)
@@ -90,7 +90,6 @@ class AppActivity: AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.MainLay, getPageFragment(portPage))
-            //.addToBackStack(null)
             .commit()
     }
     private fun getPageFragment(portPage: SharedViewModel.Pages): Fragment {
