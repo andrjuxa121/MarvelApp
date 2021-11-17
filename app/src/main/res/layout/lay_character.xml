@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"/>
 
     <View
-        android:background="@color/cRedLight"
+        android:background="@color/c_red_light"
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
 
@@ -24,7 +24,7 @@
         android:id="@+id/name"
         android:background="@drawable/plate"
         style="@style/text_title"
-        android:textColor="@color/cWhiteLight"
+        android:textColor="@color/c_white_light"
         android:maxLength="20"
         android:gravity="center"
         android:padding="5dp"

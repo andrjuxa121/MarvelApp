@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="cWhiteLight">#FFFFFFFF</color>
-    <color name="cWhiteDark">#efefef</color>
-    <color name="cBlackLight">#323232</color>
-    <color name="cBlackDark">#2a2a2a</color>
-    <color name="cRedLight">#ff2525</color>
-    <color name="cRedDark">#e41717</color>
-    <color name="cRed">#ff0000</color>
-    <color name="cShadow">#20313131</color>
-    <color name="cNoColor">#00000000</color>
+    <color name="c_white_light">#FFFFFFFF</color>
+    <color name="c_white_dark">#efefef</color>
+    <color name="c_black_light">#323232</color>
+    <color name="c_black_dark">#2a2a2a</color>
+    <color name="c_red_light">#ff2525</color>
+    <color name="c_red_dark">#e41717</color>
+    <color name="c_red">#ff0000</color>
+    <color name="c_shadow">#20313131</color>
+    <color name="c_transparent">#00000000</color>
 </resources>

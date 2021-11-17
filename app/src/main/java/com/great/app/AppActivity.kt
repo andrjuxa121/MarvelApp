@@ -19,6 +19,7 @@ import com.great.app.fragment.DetailsFragment
 import com.great.app.fragment.EmptyFragment
 import com.great.app.fragment.ListFragment
 import com.great.app.model.DataWrapper
+import com.great.app.repository.RepoViewModel
 import com.great.app.repository.retrofit.RetrofitBuilder
 import com.great.app.repository.retrofit.ApiService
 import com.great.app.utils.Constant
@@ -30,19 +31,15 @@ import retrofit2.Response
 
 
 class AppActivity: AppCompatActivity() {
-    private lateinit var apiService: ApiService
     private lateinit var dialog: AlertDialog
 
-    val sharedModel: SharedViewModel by viewModels()
-    private lateinit var listFragment: ListFragment
-    private lateinit var detailsFragment: DetailsFragment
-    private lateinit var emptyFragment: EmptyFragment
+    val repoViewModel: RepoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity)
 
-        sharedModel.getPortPage().observe(this, { portPage ->
+        repoViewModel.getPortPage().observe(this, { portPage ->
             updatePage(portPage)
         })
         initFragments()
@@ -66,7 +63,7 @@ class AppActivity: AppCompatActivity() {
 
     override fun onBackPressed() {
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if(sharedModel.getPortPage().value == SharedViewModel.Pages.DETAILS_PAGE) {
+            if(repoViewModel.getPortPage().value == SharedViewModel.Pages.DETAILS_PAGE) {
                 updatePage(SharedViewModel.Pages.LIST_PAGE)
                 return
             }
@@ -118,7 +115,7 @@ class AppActivity: AppCompatActivity() {
 
                 response.body()?.let { dataWrapper ->
                     val characters = dataWrapper.data!!.results!!
-                    sharedModel.setCharacters(characters)
+                    repoViewModel.setCharacters(characters)
                     dialog.dismiss()
                     unlockOrientation()
                 }
@@ -141,11 +138,11 @@ class AppActivity: AppCompatActivity() {
 
                 val dataWrapper = response.body()
                 val character = dataWrapper?.data?.results?.get(0)
-                sharedModel.selectCharacter(character)
+                repoViewModel.selectCharacter(character)
 
                 dialog.dismiss()
                 unlockOrientation()
-                sharedModel.setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
+                repoViewModel.setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
             }
         })
     }

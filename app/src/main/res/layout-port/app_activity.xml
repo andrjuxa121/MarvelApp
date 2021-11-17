@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/cWhiteDark"
+    android:background="@color/c_white_dark"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/RefreshButton"
-        android:background="@color/cBlackLight"
+        android:background="@color/c_black_light"
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="@dimen/dp10"
@@ -30,9 +30,9 @@
 
             <EditText
                 android:id="@+id/Input"
-                android:background="@color/cNoColor"
+                android:background="@color/c_transparent"
                 style="@style/text_bold"
-                android:textColor="@color/cWhiteLight"
+                android:textColor="@color/c_white_light"
                 android:inputType="numberDecimal"
                 android:gravity="bottom"
                 android:padding="@dimen/dp5"
