@@ -1,10 +1,13 @@
 package com.great.app.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,7 +22,16 @@ class DetailsFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View?{
 
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        val layView = inflater.inflate(R.layout.fragment_details, container, false)
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layView.layoutParams = LinearLayout.LayoutParams(
+                resources.getDimension(R.dimen.dp0).toInt(),    // width
+                FrameLayout.LayoutParams.MATCH_PARENT,          // height
+                50f                                       // weight
+            )
+        }
+        return layView
     }
 
     override fun onViewCreated(layView: View, savedInstanceState: Bundle?) {

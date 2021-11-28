@@ -1,86 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/c_white_dark"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/c_white_dark"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/RefreshButton"
-        android:background="@color/c_black_light"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="@dimen/dp10"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/c_black_light"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
 
         <ImageView
-            android:src="@drawable/marvel_logo"
-            android:adjustViewBounds="true"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/marvel_logo" />
 
         <RelativeLayout
-            android:background="@drawable/bottom_line"
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp10"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/dp10">
+            android:background="@drawable/bottom_line"
+            android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/Input"
-                android:background="@color/c_transparent"
+                android:id="@+id/edt_search"
                 style="@style/text_bold"
-                android:textColor="@color/c_white_light"
-                android:inputType="numberDecimal"
-                android:gravity="bottom"
-                android:padding="@dimen/dp5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/SearchButton"/>
+                android:layout_toStartOf="@+id/btn_search"
+                android:background="@color/c_transparent"
+                android:gravity="bottom"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/dp5"
+                android:textColor="@color/c_white_light" />
 
             <ImageView
-                android:id="@+id/SearchButton"
-                android:src="@drawable/search"
-                android:scaleType="fitEnd"
-                android:paddingStart="@dimen/dp10"
-                android:paddingEnd="0dp"
-                android:padding="@dimen/dp5"
+                android:id="@+id/btn_search"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp5"
+                android:paddingStart="@dimen/dp10"
+                android:paddingEnd="0dp"
+                android:scaleType="fitEnd"
+                android:src="@drawable/search" />
         </RelativeLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/MainLay"
+    <LinearLayout
+        android:id="@+id/lay_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="100"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/ListFrag"
-                android:name="com.great.app.fragment.ListFragment"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="50"/>
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/DetailsFrag"
-                android:name="com.great.app.fragment.DetailsFragment"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="50"/>
-        </LinearLayout>
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="100" />
 </LinearLayout>

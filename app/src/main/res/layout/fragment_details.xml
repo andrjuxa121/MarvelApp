@@ -1,126 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/c_white_light"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/c_white_light">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image"
-            android:src="@drawable/image_not_found"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp10">
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/image_not_found" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <TextView
                 style="@style/text_bold"
-                android:gravity="end"
-                android:padding="5dp"
-                android:text="ID:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"/>
+                android:layout_weight="50"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="ID:" />
 
             <TextView
                 android:id="@+id/id"
                 style="@style/text_main"
-                android:padding="5dp"
-                android:text="@string/NoInformation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp10"
                 android:layout_weight="50"
-                android:layout_marginStart="@dimen/dp10"/>
+                android:padding="5dp"
+                android:text="@string/NoInformation" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="100"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <TextView
                 style="@style/text_bold"
-                android:gravity="end"
-                android:padding="5dp"
-                android:text="Name:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"/>
+                android:layout_weight="50"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Name:" />
 
             <TextView
                 android:id="@+id/name"
                 style="@style/text_main"
-                android:padding="5dp"
-                android:text="@string/NoInformation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp10"
                 android:layout_weight="50"
-                android:layout_marginStart="@dimen/dp10"/>
+                android:padding="5dp"
+                android:text="@string/NoInformation" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="100"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <TextView
                 style="@style/text_bold"
-                android:gravity="end"
-                android:padding="5dp"
-                android:text="Description:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"/>
+                android:layout_weight="50"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Description:" />
 
             <TextView
                 android:id="@+id/description"
                 style="@style/text_main"
-                android:padding="5dp"
-                android:text="@string/NoInformation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp10"
                 android:layout_weight="50"
-                android:layout_marginStart="@dimen/dp10"/>
+                android:padding="5dp"
+                android:text="@string/NoInformation" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="100"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <TextView
                 style="@style/text_bold"
-                android:gravity="end"
-                android:padding="5dp"
-                android:text="Comics:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"/>
+                android:layout_weight="50"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Comics:" />
 
             <TextView
                 android:id="@+id/comics"
                 style="@style/text_main"
-                android:padding="5dp"
-                android:text="@string/NoInformation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp10"
                 android:layout_weight="50"
-                android:layout_marginStart="@dimen/dp10"/>
+                android:padding="5dp"
+                android:text="@string/NoInformation" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

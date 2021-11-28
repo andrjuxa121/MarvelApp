@@ -30,127 +30,136 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class AppActivity: AppCompatActivity() {
+class AppActivity : AppCompatActivity() {
     private lateinit var dialog: AlertDialog
-
     val repoViewModel: RepoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity)
+        setMainPage(savedInstanceState)
 
-        repoViewModel.getPortPage().observe(this, { portPage ->
-            updatePage(portPage)
-        })
-        initFragments()
+//        repoViewModel.getPortPage().observe(this, { portPage ->
+//            updatePage(portPage)
+//        })
+//        initFragments()
+//
+//        apiService = RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(ApiService::class.java)
+//        dialog = SpotsDialog.Builder()
+//            .setCancelable(true)
+//            .setContext(this)
+//            .build()
+//
+//        val refreshButton: LinearLayout = findViewById(R.id.RefreshButton)
+//        refreshButton.setOnClickListener {
+//            loadCharacters()
+//        }
+//        val input: EditText = findViewById(R.id.edt_search)
+//        val searchButton: ImageView = findViewById(R.id.btn_search)
+//        searchButton.setOnClickListener {
+//            loadCharacter(input.text.toString().toInt())
+//        }
+    }
 
-        apiService = RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(ApiService::class.java)
-        dialog = SpotsDialog.Builder()
-            .setCancelable(true)
-            .setContext(this)
-            .build()
+//    override fun onBackPressed() {
+//        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            if (repoViewModel.getPortPage().value == SharedViewModel.Pages.DETAILS_PAGE) {
+//                updatePage(SharedViewModel.Pages.LIST_PAGE)
+//                return
+//            }
+//        }
+//        super.onBackPressed()
+//    }
 
-        val refreshButton: LinearLayout = findViewById(R.id.RefreshButton)
-        refreshButton.setOnClickListener {
-            loadCharacters()
+    fun openFragment(fragment: Fragment) {
+        val fragmentTransaction = supportFragmentManager .beginTransaction()
+        supportFragmentManager.fragments.forEach { oldFragment ->
+            fragmentTransaction.remove(oldFragment)
         }
-        val input: EditText = findViewById(R.id.Input)
-        val searchButton: ImageView = findViewById(R.id.SearchButton)
-        searchButton.setOnClickListener {
-            loadCharacter(input.text.toString().toInt())
-        }
+        fragmentTransaction.add(R.id.lay_main, fragment).commit()
     }
 
-    override fun onBackPressed() {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if(repoViewModel.getPortPage().value == SharedViewModel.Pages.DETAILS_PAGE) {
-                updatePage(SharedViewModel.Pages.LIST_PAGE)
-                return
+    private fun setMainPage(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                val listFragment = ListFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.lay_main, listFragment)
+                    .commit()
+            } else {
+                val listFragment = ListFragment()
+                val detailsFragment = DetailsFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.lay_main, listFragment)
+                    .add(R.id.lay_main, detailsFragment)
+                    .commit()
             }
         }
-        super.onBackPressed()
     }
 
-    private fun initFragments() {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            listFragment = ListFragment()
-            detailsFragment = DetailsFragment()
-            updatePage(SharedViewModel.Pages.LIST_PAGE)
-            return
-        }
-        listFragment = supportFragmentManager.findFragmentById(R.id.ListFrag) as ListFragment
-        detailsFragment = supportFragmentManager.findFragmentById(R.id.DetailsFrag) as DetailsFragment
-        emptyFragment = EmptyFragment()
-    }
-
-    private fun updatePage(portPage: SharedViewModel.Pages) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.MainLay, getPageFragment(portPage))
-            .commit()
-    }
-    private fun getPageFragment(portPage: SharedViewModel.Pages): Fragment {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            return when (portPage) {
-                SharedViewModel.Pages.LIST_PAGE -> listFragment
-                SharedViewModel.Pages.DETAILS_PAGE -> detailsFragment
-            }
-        }
-        return emptyFragment
-    }
-
-    private fun loadCharacters() {
-        lockOrientation() // no rotation on loading
-        dialog.show()
-        apiService.getCharacters().enqueue(object: Callback<DataWrapper> {
-            override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
-                Toast.makeText(this@AppActivity,
-                    getString(R.string.NoResponse), Toast.LENGTH_LONG).show()
-                dialog.dismiss()
-                unlockOrientation()
-            }
-            override fun onResponse(
-                call: Call<DataWrapper?>,
-                response: Response<DataWrapper?>) {
-
-                response.body()?.let { dataWrapper ->
-                    val characters = dataWrapper.data!!.results!!
-                    repoViewModel.setCharacters(characters)
-                    dialog.dismiss()
-                    unlockOrientation()
-                }
-            }
-        })
-    }
-    private fun loadCharacter(id: Int) {
-        lockOrientation() // no rotation on loading
-        dialog.show()
-        apiService.getCharacter(id).enqueue(object: Callback<DataWrapper> {
-            override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
-                Toast.makeText(this@AppActivity,
-                    getString(R.string.NoResponse), Toast.LENGTH_LONG).show()
-                dialog.dismiss()
-                unlockOrientation()
-            }
-            override fun onResponse(
-                call: Call<DataWrapper>,
-                response: Response<DataWrapper>) {
-
-                val dataWrapper = response.body()
-                val character = dataWrapper?.data?.results?.get(0)
-                repoViewModel.selectCharacter(character)
-
-                dialog.dismiss()
-                unlockOrientation()
-                repoViewModel.setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
-            }
-        })
-    }
+//    private fun loadCharacters() {
+//        lockOrientation() // no rotation on loading
+//        dialog.show()
+//        apiService.getCharacters().enqueue(object : Callback<DataWrapper> {
+//            override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
+//                Toast.makeText(
+//                    this@AppActivity,
+//                    getString(R.string.NoResponse), Toast.LENGTH_LONG
+//                ).show()
+//                dialog.dismiss()
+//                unlockOrientation()
+//            }
+//
+//            override fun onResponse(
+//                call: Call<DataWrapper?>,
+//                response: Response<DataWrapper?>
+//            ) {
+//
+//                response.body()?.let { dataWrapper ->
+//                    val characters = dataWrapper.data!!.results!!
+//                    repoViewModel.setCharacters(characters)
+//                    dialog.dismiss()
+//                    unlockOrientation()
+//                }
+//            }
+//        })
+//    }
+//
+//    private fun loadCharacter(id: Int) {
+//        lockOrientation() // no rotation on loading
+//        dialog.show()
+//        apiService.getCharacter(id).enqueue(object : Callback<DataWrapper> {
+//            override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
+//                Toast.makeText(
+//                    this@AppActivity,
+//                    getString(R.string.NoResponse), Toast.LENGTH_LONG
+//                ).show()
+//                dialog.dismiss()
+//                unlockOrientation()
+//            }
+//
+//            override fun onResponse(
+//                call: Call<DataWrapper>,
+//                response: Response<DataWrapper>
+//            ) {
+//
+//                val dataWrapper = response.body()
+//                val character = dataWrapper?.data?.results?.get(0)
+//                repoViewModel.selectCharacter(character)
+//
+//                dialog.dismiss()
+//                unlockOrientation()
+//                repoViewModel.setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
+//            }
+//        })
+//    }
 
     private fun lockOrientation() {
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
         val rotation: Int = display.rotation
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             requestedOrientation =
                 if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_270)
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -162,6 +171,7 @@ class AppActivity: AppCompatActivity() {
                 ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             else ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
     }
+
     private fun unlockOrientation() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }

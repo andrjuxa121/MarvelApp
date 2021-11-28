@@ -36,7 +36,7 @@ class RepoViewModel: ViewModel() {
         return _character;
     }
 
-    private fun loadCharacters() {
+    fun loadCharacters() {
         apiService.getCharacters().enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 _characters.value = null;
