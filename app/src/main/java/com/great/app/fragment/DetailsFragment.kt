@@ -12,15 +12,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.great.app.R
+import com.great.app.repository.RepoViewModel
 import com.great.app.utils.Formater
-import com.great.app.view_model.SharedViewModel
 import com.squareup.picasso.Picasso
 
-class DetailsFragment: Fragment() {
+class DetailsFragment : Fragment() {
+    private val repoViewModel: RepoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View?{
+        savedInstanceState: Bundle?
+    ): View? {
 
         val layView = inflater.inflate(R.layout.fragment_details, container, false)
 
@@ -41,25 +43,24 @@ class DetailsFragment: Fragment() {
         val characterDescription: TextView = layView.findViewById(R.id.description)
         val characterComics: TextView = layView.findViewById(R.id.comics)
 
-        val sharedModel: SharedViewModel by activityViewModels()
-        sharedModel.getSelectedCharacter().observe(viewLifecycleOwner, { nullCharacter ->
-            nullCharacter?.let { character ->
+        repoViewModel.character.observe(viewLifecycleOwner, { nullableCharacter ->
+            nullableCharacter?.let { character ->
                 Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(characterImage)
                 characterId.setText(character.id.toString())
                 characterName.setText(character.name)
                 characterDescription.setText(character.description)
                 var nameOfComics = ""
                 character.comics?.items?.forEachIndexed { index, item ->
-                    nameOfComics += "${index+1}. ${item.name}\n"
+                    nameOfComics += "${index + 1}. ${item.name}\n"
                 }
                 characterComics.setText(nameOfComics)
                 return@observe
             }
             characterImage.setImageResource(R.drawable.image_not_found)
-            characterId.setText(getString(R.string.NoInformation))
-            characterName.setText(getString(R.string.NoInformation))
-            characterDescription.setText(getString(R.string.NoInformation))
-            characterComics.setText(getString(R.string.NoInformation))
+            characterId.setText(getString(R.string.no_information))
+            characterName.setText(getString(R.string.no_information))
+            characterDescription.setText(getString(R.string.no_information))
+            characterComics.setText(getString(R.string.no_information))
         })
     }
 }

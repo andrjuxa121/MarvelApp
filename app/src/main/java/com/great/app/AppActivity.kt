@@ -8,31 +8,15 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Surface
 import android.view.WindowManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.great.app.fragment.DetailsFragment
-import com.great.app.fragment.EmptyFragment
 import com.great.app.fragment.ListFragment
-import com.great.app.model.DataWrapper
 import com.great.app.repository.RepoViewModel
-import com.great.app.repository.retrofit.RetrofitBuilder
-import com.great.app.repository.retrofit.ApiService
-import com.great.app.utils.Constant
-import com.great.app.view_model.SharedViewModel
-import dmax.dialog.SpotsDialog
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class AppActivity : AppCompatActivity() {
-    private lateinit var dialog: AlertDialog
-    val repoViewModel: RepoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +56,7 @@ class AppActivity : AppCompatActivity() {
 //    }
 
     fun openFragment(fragment: Fragment) {
-        val fragmentTransaction = supportFragmentManager .beginTransaction()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
         supportFragmentManager.fragments.forEach { oldFragment ->
             fragmentTransaction.remove(oldFragment)
         }

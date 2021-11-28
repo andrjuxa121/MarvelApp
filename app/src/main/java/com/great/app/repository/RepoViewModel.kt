@@ -16,25 +16,15 @@ class RepoViewModel: ViewModel() {
     private val apiService: ApiService =
         RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(ApiService::class.java)
 
-    private val _characters = MutableLiveData<List<Character>?>()
-    private val _character = MutableLiveData<Character?>()
-
-    fun getCharacters(): LiveData<List<Character>?> {
-        if(_characters.value == null) {
+    private val _characters: MutableLiveData<List<Character>?> by lazy {
+        MutableLiveData<List<Character>?>().also {
             loadCharacters()
         }
-        return _characters;
     }
+    val characters: LiveData<List<Character>?> = _characters
 
-    fun getCharacter(id: Int): LiveData<Character?> {
-        if(_character.value?.id == id) {
-            return _character
-        }
-        if(!findCharacter(id)) {
-            loadCharacter(id)
-        }
-        return _character;
-    }
+    private val _character = MutableLiveData<Character?>()
+    val character: LiveData<Character?> = _character
 
     fun loadCharacters() {
         apiService.getCharacters().enqueue(object: Callback<DataWrapper> {
@@ -52,17 +42,11 @@ class RepoViewModel: ViewModel() {
         })
     }
 
-    private fun findCharacter(id: Int): Boolean {
-        _characters.value?.forEach { character ->
-            if(character.id == id) {
-                _character.value = character;
-                return true
-            }
-        }
-        return false;
+    fun setCharacter(character: Character?) {
+        _character.value = character
     }
 
-    private fun loadCharacter(id: Int) {
+    fun loadCharacter(id: Int) {
         apiService.getCharacter(id).enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 _character.value = null;

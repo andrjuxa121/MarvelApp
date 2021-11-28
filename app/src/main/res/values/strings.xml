@@ -1,5 +1,14 @@
 <resources>
-    <string name="app_name">MarvelApp</string>
-    <string name="NoResponse">Data not received. Make sure you have a good Internet connection.</string>
-    <string name="NoInformation">No information</string>
+    <string
+        name="app_name">
+        MarvelApp
+    </string>
+    <string
+        name="no_response">
+        Data not received. Make sure you have a good Internet connection.
+    </string>
+    <string
+        name="no_information">
+        No information
+    </string>
 </resources>

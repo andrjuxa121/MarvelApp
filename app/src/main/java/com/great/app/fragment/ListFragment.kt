@@ -7,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.great.app.AppActivity
 import com.great.app.R
-import com.great.app.model.Character
 import com.great.app.adapter.ListAdapter
+import com.great.app.model.Character
 import com.great.app.repository.RepoViewModel
-import com.great.app.view_model.SharedViewModel
 
 
 class ListFragment : Fragment() {
@@ -44,8 +45,8 @@ class ListFragment : Fragment() {
     }
 
     override fun onViewCreated(layView: View, savedInstanceState: Bundle?) {
-        initRecycleView(layView);
-        initRefreshLayout(layView);
+        initRecycleView(layView)
+        initRefreshLayout(layView)
     }
 
     private fun initRecycleView(layView: View) {
@@ -61,24 +62,35 @@ class ListFragment : Fragment() {
         refreshLayout = layView.findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener {
             repoViewModel.loadCharacters()
+            refreshLayout.isRefreshing = true;
         }
     }
 
     private fun subscribeOnViewModel() {
-        repoViewModel.getCharacters().observe(viewLifecycleOwner, { nullableCharacters ->
-
-            if (nullableCharacters == null) // todo
+        repoViewModel.characters.observe(viewLifecycleOwner, { nullableCharacters ->
+            if (nullableCharacters == null) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.no_response), Toast.LENGTH_SHORT
+                ).show()
+                return@observe
+            }
             val listAdapter = ListAdapter(requireActivity(), nullableCharacters)
             listAdapter.notifyDataSetChanged()
-            listAdapter.initCharacterClickListener(object : ListAdapter.ICharacterClickListener {
-                override fun onClick(character: Character) {
-                    repoViewModel.apply {
-                        selectCharacter(character)
-                        setPortPage(SharedViewModel.Pages.DETAILS_PAGE)
+            listAdapter.initCharacterClickListener(
+                object : ListAdapter.ICharacterClickListener {
+                    override fun onClick(character: Character) {
+                        repoViewModel.setCharacter(character)
+                        openDetailsFragment()
                     }
-                }
-            })
+                })
             recyclerView.adapter = listAdapter
+            refreshLayout.isRefreshing = false;
         })
+    }
+
+    private fun openDetailsFragment() {
+        val detailsFragment = DetailsFragment()
+        (requireActivity() as AppActivity).openFragment(detailsFragment)
     }
 }

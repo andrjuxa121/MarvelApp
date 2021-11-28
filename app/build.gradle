@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.great.testapp"
         minSdk 24
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -33,7 +33,7 @@ android {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0' // requests lib for REST API
@@ -45,7 +45,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0") // live data
 
     implementation "androidx.activity:activity-ktx:1.4.0" // for viewModels()
-    implementation "androidx.fragment:fragment-ktx:1.3.6" // for viewModels()
+    implementation "androidx.fragment:fragment-ktx:1.4.0" // for viewModels()
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
