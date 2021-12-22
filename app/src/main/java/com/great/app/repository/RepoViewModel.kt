@@ -28,6 +28,10 @@ class RepoViewModel(application: Application): AndroidViewModel(application) {
     private val _character = MutableLiveData<Character?>()
     val character: LiveData<Character?> = _character
 
+    fun areCharactersAvailable(): Boolean {
+        return (characters.value != null)
+    }
+
     fun loadCharacters(responseListener: IResponseListener) {
         apiService.getCharacters().enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {

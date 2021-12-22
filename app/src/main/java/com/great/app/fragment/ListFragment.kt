@@ -46,8 +46,10 @@ class ListFragment : BaseFragment() {
         initRefreshLayout(rootView)
         subscribeOnCharactersUpdate()
 
-        repoViewModel.loadCharacters(responseListener)
-        refreshLayout.isRefreshing = true;
+        if(!repoViewModel.areCharactersAvailable()) {
+            repoViewModel.loadCharacters(responseListener)
+            refreshLayout.isRefreshing = true
+        }
     }
 
     private fun initRecycleView(rootView: View) {
