@@ -1,14 +1,13 @@
 <resources>
-    <string
-        name="app_name">
-        MarvelApp
-    </string>
-    <string
-        name="no_response">
-        Data not received. Make sure you have a good Internet connection.
-    </string>
-    <string
-        name="no_information">
-        No information
-    </string>
+    <string name="app_name">MarvelApp</string>
+    <string name="no_response">No response. Make sure you have a good Internet connection</string>
+    <string name="bad_request">Sorry. Bad request</string>
+    <string name="empty_response">Response is empty</string>
+    <string name="no_information">No information</string>
+
+    <!-- Details fragment -->
+    <string name="id">ID:</string>
+    <string name="name">Name:</string>
+    <string name="description">Description:</string>
+    <string name="comics">Comics:</string>
 </resources>

@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/img_characterProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -31,10 +31,10 @@
                 android:layout_weight="50"
                 android:gravity="end"
                 android:padding="5dp"
-                android:text="ID:" />
+                android:text="@string/id" />
 
             <TextView
-                android:id="@+id/id"
+                android:id="@+id/tv_characterId"
                 style="@style/text_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -57,10 +57,10 @@
                 android:layout_weight="50"
                 android:gravity="end"
                 android:padding="5dp"
-                android:text="Name:" />
+                android:text="@string/name" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/tv_characterName"
                 style="@style/text_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -83,10 +83,10 @@
                 android:layout_weight="50"
                 android:gravity="end"
                 android:padding="5dp"
-                android:text="Description:" />
+                android:text="@string/description" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/tv_characterDescription"
                 style="@style/text_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -109,10 +109,10 @@
                 android:layout_weight="50"
                 android:gravity="end"
                 android:padding="5dp"
-                android:text="Comics:" />
+                android:text="@string/comics" />
 
             <TextView
-                android:id="@+id/comics"
+                android:id="@+id/tv_characterInComics"
                 style="@style/text_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

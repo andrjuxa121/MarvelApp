@@ -13,14 +13,35 @@ import com.great.app.model.Character
 import com.great.app.utils.Formater
 import com.squareup.picasso.Picasso
 
-class ListAdapter(private val context: Context, private val characters: List<Character>):
-    RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class ListAdapter(
+    private val context: Context,
+    private val characters: List<Character>
+) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     private var characterClickListener: ICharacterClickListener? = null
 
     fun initCharacterClickListener(listener: ICharacterClickListener) {
         characterClickListener = listener
     }
+
+    override fun onCreateViewHolder(parentLay: ViewGroup, viewType: Int): ListViewHolder {
+        val itemView =
+            LayoutInflater.from(context).inflate(R.layout.lay_character, parentLay, false)
+        itemView.layoutParams = getLayParams()
+        return ListViewHolder(itemView)
+    }
+
+    override fun onBindViewHolder(holder: ListViewHolder, id: Int) {
+        val character = characters[id]
+        Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(holder.characterImage)
+        holder.characterName.text = character.name
+        holder.initCharacterClickListener(character)
+    }
+
+    override fun getItemCount(): Int {
+        return characters.size
+    }
+
     private fun getLayParams(): LinearLayout.LayoutParams {
         val layParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, // width
@@ -31,25 +52,9 @@ class ListAdapter(private val context: Context, private val characters: List<Cha
         return layParams
     }
 
-    override fun onCreateViewHolder(parentLay: ViewGroup, viewType: Int): ListViewHolder {
-        val itemView = LayoutInflater.
-            from(context).inflate(R.layout.lay_character, parentLay, false)
-        itemView.layoutParams = getLayParams()
-        return ListViewHolder(itemView)
-    }
-    override fun onBindViewHolder(holder: ListViewHolder, id: Int) {
-        val character = characters[id]
-        Picasso.get().load(Formater.getImageUrl(character.thumbnail)).into(holder.characterImage)
-        holder.characterName.text = character.name
-        holder.initCharacterClickListener(character)
-    }
-    override fun getItemCount(): Int {
-        return characters.size
-    }
-
-    inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val characterImage: ImageView = itemView.findViewById(R.id.image)
-        val characterName: TextView = itemView.findViewById(R.id.name)
+    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val characterImage: ImageView = itemView.findViewById(R.id.img_characterProfile)
+        val characterName: TextView = itemView.findViewById(R.id.tv_characterName)
 
         fun initCharacterClickListener(character: Character) {
             itemView.setOnClickListener {

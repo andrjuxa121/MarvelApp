@@ -1,92 +1,92 @@
 package com.great.app.fragment
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.great.app.AppActivity
 import com.great.app.R
 import com.great.app.adapter.ListAdapter
+import com.great.app.databinding.FragmentListBinding
 import com.great.app.model.Character
-import com.great.app.repository.RepoViewModel
 
 
-class ListFragment : Fragment() {
-    private val repoViewModel: RepoViewModel by activityViewModels()
+class ListFragment : BaseFragment() {
 
-    private lateinit var refreshLayout: SwipeRefreshLayout;
-    private lateinit var recyclerView: RecyclerView;
+    private lateinit var binding: FragmentListBinding
+
+    private lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = FragmentListBinding.inflate(inflater, container, false)
+        val rootView = binding.root
 
-        val layView = inflater.inflate(R.layout.fragment_list, container, false);
-
-        // todo if error put in onViewCreated
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            layView.layoutParams = LinearLayout.LayoutParams(
+            rootView.layoutParams = LinearLayout.LayoutParams(
                 resources.getDimension(R.dimen.dp0).toInt(),    // width
-                FrameLayout.LayoutParams.MATCH_PARENT,          // height
+                LinearLayout.LayoutParams.MATCH_PARENT,         // height
                 50f                                       // weight
             )
         }
-        return layView
+        return rootView
     }
 
-    override fun onViewCreated(layView: View, savedInstanceState: Bundle?) {
-        initRecycleView(layView)
-        initRefreshLayout(layView)
+    override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
+        initRecycleView(rootView)
+        initRefreshLayout(rootView)
+        subscribeOnCharactersUpdate()
+
+        repoViewModel.loadCharacters(responseListener)
+        refreshLayout.isRefreshing = true;
     }
 
-    private fun initRecycleView(layView: View) {
+    private fun initRecycleView(rootView: View) {
         val layManager = LinearLayoutManager(
             requireActivity(), RecyclerView.VERTICAL, false
         )
-        recyclerView = layView.findViewById(R.id.recycler_view)
+        recyclerView = rootView.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = layManager
         recyclerView.setHasFixedSize(true)
     }
 
-    private fun initRefreshLayout(layView: View) {
-        refreshLayout = layView.findViewById(R.id.refresh_layout);
+    private fun initRefreshLayout(rootView: View) {
+        refreshLayout = rootView.findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener {
-            repoViewModel.loadCharacters()
-            refreshLayout.isRefreshing = true;
+            repoViewModel.loadCharacters(responseListener)
         }
     }
 
-    private fun subscribeOnViewModel() {
+    private fun subscribeOnCharactersUpdate() {
         repoViewModel.characters.observe(viewLifecycleOwner, { nullableCharacters ->
-            if (nullableCharacters == null) {
-                Toast.makeText(
-                    requireActivity(),
-                    getString(R.string.no_response), Toast.LENGTH_SHORT
-                ).show()
-                return@observe
+            nullableCharacters?.let { characters ->
+                updateUi(characters)
             }
-            val listAdapter = ListAdapter(requireActivity(), nullableCharacters)
-            listAdapter.notifyDataSetChanged()
-            listAdapter.initCharacterClickListener(
-                object : ListAdapter.ICharacterClickListener {
-                    override fun onClick(character: Character) {
-                        repoViewModel.setCharacter(character)
-                        openDetailsFragment()
-                    }
-                })
-            recyclerView.adapter = listAdapter
-            refreshLayout.isRefreshing = false;
         })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateUi(characters: List<Character>) {
+        val listAdapter = ListAdapter(requireActivity(), characters)
+        listAdapter.notifyDataSetChanged()
+        listAdapter.initCharacterClickListener(
+            object : ListAdapter.ICharacterClickListener {
+                override fun onClick(character: Character) {
+                    repoViewModel.setCharacter(character)
+                    openDetailsFragment()
+                }
+            })
+        recyclerView.adapter = listAdapter
+        refreshLayout.isRefreshing = false
     }
 
     private fun openDetailsFragment() {
