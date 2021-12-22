@@ -18,13 +18,19 @@ class AppActivity : AppCompatActivity() {
         setMainPage()
     }
 
-    fun openFragment(fragment: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        supportFragmentManager.fragments.forEach { oldFragment ->
-            fragmentTransaction.remove(oldFragment)
+    override fun onBackPressed() {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            supportFragmentManager.popBackStack()
+            return
         }
-        fragmentTransaction
+        super.onBackPressed()
+    }
+
+    fun openFragment(fragment: Fragment) {
+        clearOldFragments(
+            supportFragmentManager.beginTransaction())
             .add(R.id.lay_main, fragment)
+            .addToBackStack(fragment.javaClass.name)
             .commit()
     }
 
@@ -39,16 +45,14 @@ class AppActivity : AppCompatActivity() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             val listFragment = ListFragment()
             clearOldFragments(
-                supportFragmentManager.beginTransaction()
-            )
+                supportFragmentManager.beginTransaction())
                 .add(R.id.lay_main, listFragment)
                 .commit()
         } else {
             val listFragment = ListFragment()
             val detailsFragment = DetailsFragment()
             clearOldFragments(
-                supportFragmentManager.beginTransaction()
-            )
+                supportFragmentManager.beginTransaction())
                 .add(R.id.lay_main, listFragment)
                 .add(R.id.lay_main, detailsFragment)
                 .commit()

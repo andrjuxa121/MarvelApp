@@ -90,7 +90,9 @@ class ListFragment : BaseFragment() {
     }
 
     private fun openDetailsFragment() {
-        val detailsFragment = DetailsFragment()
-        (requireActivity() as AppActivity).openFragment(detailsFragment)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            val detailsFragment = DetailsFragment()
+            (requireActivity() as AppActivity).openFragment(detailsFragment)
+        }
     }
 }
