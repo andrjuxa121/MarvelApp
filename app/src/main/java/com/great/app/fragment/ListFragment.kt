@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.great.app.AppActivity
 import com.great.app.R
 import com.great.app.adapter.ListAdapter
@@ -19,16 +18,14 @@ import com.great.app.model.Character
 
 class ListFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentListBinding
-
-    private lateinit var refreshLayout: SwipeRefreshLayout
-    private lateinit var recyclerView: RecyclerView
+    private var _binding: FragmentListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListBinding.inflate(inflater, container, false)
+        _binding = FragmentListBinding.inflate(inflater, container, false)
         val rootView = binding.root
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -42,28 +39,29 @@ class ListFragment : BaseFragment() {
     }
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
-        initRecycleView(rootView)
-        initRefreshLayout(rootView)
+        initViews()
         subscribeOnCharactersUpdate()
 
         if(!repoViewModel.areCharactersAvailable()) {
             repoViewModel.loadCharacters(responseListener)
-            refreshLayout.isRefreshing = true
+            binding.refreshLayout.isRefreshing = true
         }
     }
 
-    private fun initRecycleView(rootView: View) {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initViews() {
         val layManager = LinearLayoutManager(
             requireActivity(), RecyclerView.VERTICAL, false
         )
-        recyclerView = rootView.findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = layManager
-        recyclerView.setHasFixedSize(true)
-    }
-
-    private fun initRefreshLayout(rootView: View) {
-        refreshLayout = rootView.findViewById(R.id.refresh_layout);
-        refreshLayout.setOnRefreshListener {
+        binding.recyclerView.apply {
+            layoutManager = layManager
+            setHasFixedSize(true)
+        }
+        binding.refreshLayout.setOnRefreshListener {
             repoViewModel.loadCharacters(responseListener)
         }
     }
@@ -87,8 +85,8 @@ class ListFragment : BaseFragment() {
                     openDetailsFragment()
                 }
             })
-        recyclerView.adapter = listAdapter
-        refreshLayout.isRefreshing = false
+        binding.recyclerView.adapter = listAdapter
+        binding.refreshLayout.isRefreshing = false
     }
 
     private fun openDetailsFragment() {

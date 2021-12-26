@@ -15,13 +15,14 @@ import com.squareup.picasso.Picasso
 
 class DetailsFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentDetailsBinding
+    private var _binding: FragmentDetailsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         val rootView = binding.root
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -38,6 +39,11 @@ class DetailsFragment : BaseFragment() {
         repoViewModel.character.observe(viewLifecycleOwner, { nullableCharacter ->
             updateUi(nullableCharacter)
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun updateUi(nullableCharacter: Character?) {
