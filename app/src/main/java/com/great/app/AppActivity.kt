@@ -6,15 +6,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.great.app.databinding.ActivityAppBinding
 import com.great.app.fragment.DetailsFragment
 import com.great.app.fragment.ListFragment
 
 
 class AppActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAppBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.app_activity)
+        binding = ActivityAppBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setMainPage()
     }
 
@@ -32,6 +36,10 @@ class AppActivity : AppCompatActivity() {
             .add(R.id.lay_main, fragment)
             .addToBackStack(fragment.javaClass.name)
             .commit()
+    }
+
+    fun clearBackground() {
+        binding.layMain.setBackgroundResource(R.color.c_white_light)
     }
 
     private fun clearOldFragments(fragmentTransaction: FragmentTransaction): FragmentTransaction {

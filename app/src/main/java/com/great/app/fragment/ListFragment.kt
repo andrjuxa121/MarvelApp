@@ -76,7 +76,7 @@ class ListFragment : BaseFragment() {
             repoViewModel.loadCharacters(responseListener)
         }
         binding.btnSearch.setOnClickListener {
-            if(!isSearchFieldOpen) {
+            if (!isSearchFieldOpen) {
                 showSearchFiled()
             } else hideSearchFiled()
             isSearchFieldOpen = !isSearchFieldOpen
@@ -93,6 +93,7 @@ class ListFragment : BaseFragment() {
     private fun subscribeOnCharactersUpdate() {
         repoViewModel.characters.observe(viewLifecycleOwner, { nullableCharacters ->
             nullableCharacters?.let { characters ->
+                (requireActivity() as AppActivity).clearBackground()
                 updateUi(characters)
             }
         })
@@ -156,7 +157,7 @@ class ListFragment : BaseFragment() {
             .duration = animationDuration
     }
 
-    private fun setEnabled(enabled: Boolean, edit: EditText,) {
+    private fun setEnabled(enabled: Boolean, edit: EditText) {
         edit.apply {
             isFocusable = enabled
             isFocusableInTouchMode = enabled
