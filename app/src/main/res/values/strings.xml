@@ -4,6 +4,7 @@
     <string name="bad_request">Sorry. Bad request</string>
     <string name="empty_response">Response is empty</string>
     <string name="no_information">No information</string>
+    <string name="empty_search_query">Search query is empty</string>
 
     <!-- Details fragment -->
     <string name="id">ID:</string>
