@@ -55,7 +55,7 @@ class DetailsFragment : BaseFragment() {
             binding.tvCharacterInComics.text = nameOfComics
             return
         }
-        binding.imgCharacterProfile.setImageResource(R.drawable.image_not_found)
+        binding.imgCharacterProfile.setImageResource(R.drawable.img_not_found)
         binding.tvCharacterId.setText(R.string.no_information)
         binding.tvCharacterName.setText(R.string.no_information)
         binding.tvCharacterDescription.setText(R.string.no_information)

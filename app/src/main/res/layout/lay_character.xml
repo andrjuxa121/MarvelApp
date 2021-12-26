@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/plate"
+    android:background="@drawable/bg_plate"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/img_characterProfile"
-        android:src="@drawable/image_not_found"
+        android:src="@drawable/img_not_found"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/tv_characterName"
-        android:background="@drawable/plate"
+        android:background="@drawable/bg_plate"
         style="@style/text_title"
         android:textColor="@color/c_white_light"
         android:maxLength="20"
