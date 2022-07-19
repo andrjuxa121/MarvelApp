@@ -1,11 +1,9 @@
-package com.great.app
-
-
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.great.app.R
 import com.great.app.databinding.ActivityAppBinding
 import com.great.app.fragment.DetailsFragment
 import com.great.app.fragment.ListFragment

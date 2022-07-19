@@ -1,4 +1,4 @@
-package com.great.app.repository
+package com.great.app.view_model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.great.app.R
 import com.great.app.model.Character
 import com.great.app.model.DataWrapper
-import com.great.app.repository.retrofit.ApiService
-import com.great.app.repository.retrofit.RetrofitBuilder
+import com.great.app.repository.MarvelApi
+import com.great.app.repository.RetrofitBuilder
 import com.great.app.utils.Constant
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,8 +16,8 @@ import retrofit2.Response
 
 class RepoViewModel(application: Application): AndroidViewModel(application) {
 
-    private val apiService: ApiService =
-        RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(ApiService::class.java)
+    private val marvelApi: MarvelApi =
+        RetrofitBuilder.getRetrofit(Constant.BASE_URL).create(MarvelApi::class.java)
 
     private val _characters = MutableLiveData<List<Character>?>()
     val characters: LiveData<List<Character>?> = _characters
@@ -30,7 +30,7 @@ class RepoViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun loadCharacters(responseListener: IResponseListener) {
-        apiService.getCharacters().enqueue(object: Callback<DataWrapper> {
+        marvelApi.getCharacters().enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 _characters.value = null
                 responseListener.onFailure(R.string.no_response)
@@ -59,7 +59,7 @@ class RepoViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun loadCharacter(id: Int, responseListener: IResponseListener) {
-        apiService.getCharacter(id).enqueue(object: Callback<DataWrapper> {
+        marvelApi.getCharacter(id).enqueue(object: Callback<DataWrapper> {
             override fun onFailure(call: Call<DataWrapper>, t: Throwable) {
                 _character.value = null
                 responseListener.onFailure(R.string.no_response)

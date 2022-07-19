@@ -1,4 +1,4 @@
-package com.great.app.repository.retrofit
+package com.great.app.repository
 
 import com.great.app.model.DataWrapper
 import com.great.app.utils.Constant
@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ApiService {
+interface MarvelApi {
     @GET("characters")
     fun getCharacters(
         @Query("ts") timeStamp: String = Constant.TIME_STAMP,
