@@ -1,15 +1,11 @@
 package com.great.app.fragment
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,31 +19,15 @@ import com.great.app.view_model.MainViewModel
 import com.great.app.view_model.ViewModelState
 
 
-class ListFragment : BaseFragment() {
+class ListFragment : BaseFragment<FragmentListBinding>() {
 
     private val mainViewModel by activityViewModels<MainViewModel>()
-
-    private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
 
     private var isSearchFieldOpen = false
     private val animationDuration: Long = 300 // ms
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentListBinding.inflate(inflater, container, false)
-        val rootView = binding.root
-
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            rootView.layoutParams = LinearLayout.LayoutParams(
-                resources.getDimension(R.dimen.dp0).toInt(),    // width
-                LinearLayout.LayoutParams.MATCH_PARENT,         // height
-                50f                                       // weight
-            )
-        }
-        return rootView
+    override fun getViewBinding(): FragmentListBinding {
+        return FragmentListBinding.inflate(layoutInflater)
     }
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
@@ -63,15 +43,10 @@ class ListFragment : BaseFragment() {
             }
         }
 
-        Log.d("111", "areCharactersAvailable: "+mainViewModel.areCharactersAvailable())
+        Log.d("111", "areCharactersAvailable: " + mainViewModel.areCharactersAvailable())
         if (!mainViewModel.areCharactersAvailable()) {
             mainViewModel.loadCharacters()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initViews() {
@@ -192,7 +167,7 @@ class ListFragment : BaseFragment() {
     }
 
     fun showProgress(value: Boolean) {
-        Log.d("111", "showProgress: "+value)
+        Log.d("111", "showProgress: " + value)
         binding.refreshLayout.isRefreshing = value
     }
 }

@@ -1,12 +1,7 @@
 package com.great.app.fragment
 
-import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import com.great.app.R
 import com.great.app.databinding.FragmentDetailsBinding
@@ -15,39 +10,18 @@ import com.great.app.utils.Formater
 import com.great.app.view_model.MainViewModel
 import com.squareup.picasso.Picasso
 
-class DetailsFragment : BaseFragment() {
+class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
 
     private val mainViewModel by activityViewModels<MainViewModel>()
 
-    private var _binding: FragmentDetailsBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        val rootView = binding.root
-
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            rootView.layoutParams = LinearLayout.LayoutParams(
-                resources.getDimension(R.dimen.dp0).toInt(),    // width
-                FrameLayout.LayoutParams.MATCH_PARENT,          // height
-                50f                                       // weight
-            )
-        }
-        return rootView
+    override fun getViewBinding(): FragmentDetailsBinding {
+        return FragmentDetailsBinding.inflate(layoutInflater)
     }
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
-        mainViewModel.character.observe(viewLifecycleOwner, { nullableCharacter ->
+        mainViewModel.character.observe(viewLifecycleOwner) { nullableCharacter ->
             updateUi(nullableCharacter)
-        })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        }
     }
 
     private fun updateUi(nullableCharacter: Character?) {
