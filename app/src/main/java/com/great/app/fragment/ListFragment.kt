@@ -49,8 +49,8 @@ class ListFragment : BaseFragment() {
         initListeners()
         subscribeOnCharactersUpdate()
 
-        if (!repoViewModel.areCharactersAvailable()) {
-            repoViewModel.loadCharacters(responseListener)
+        if (!mainViewModel.areCharactersAvailable()) {
+            mainViewModel.loadCharacters(responseListener)
             binding.refreshLayout.isRefreshing = true
         }
     }
@@ -73,7 +73,7 @@ class ListFragment : BaseFragment() {
 
     private fun initListeners() {
         binding.refreshLayout.setOnRefreshListener {
-            repoViewModel.loadCharacters(responseListener)
+            mainViewModel.loadCharacters(responseListener)
         }
         binding.btnSearch.setOnClickListener {
             if (!isSearchFieldOpen) {
@@ -91,7 +91,7 @@ class ListFragment : BaseFragment() {
     }
 
     private fun subscribeOnCharactersUpdate() {
-        repoViewModel.characters.observe(viewLifecycleOwner) { nullableCharacters ->
+        mainViewModel.characters.observe(viewLifecycleOwner) { nullableCharacters ->
             nullableCharacters?.let { characters ->
                 (requireActivity() as AppActivity).clearBackground()
                 updateUi(characters)
@@ -106,7 +106,7 @@ class ListFragment : BaseFragment() {
         listAdapter.initCharacterClickListener(
             object : ListAdapter.ICharacterClickListener {
                 override fun onClick(character: Character) {
-                    repoViewModel.setCharacter(character)
+                    mainViewModel.setCharacter(character)
                     openDetailsFragment()
                 }
             })
@@ -168,7 +168,7 @@ class ListFragment : BaseFragment() {
 
     private fun findCharacter(characterId: Int) {
         Keyboard.hide(requireActivity())
-        repoViewModel.loadCharacter(
+        mainViewModel.loadCharacter(
             characterId,
             responseListener
         )

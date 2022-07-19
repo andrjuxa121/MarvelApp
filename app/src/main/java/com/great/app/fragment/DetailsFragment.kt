@@ -36,7 +36,7 @@ class DetailsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
-        repoViewModel.character.observe(viewLifecycleOwner, { nullableCharacter ->
+        mainViewModel.character.observe(viewLifecycleOwner, { nullableCharacter ->
             updateUi(nullableCharacter)
         })
     }
