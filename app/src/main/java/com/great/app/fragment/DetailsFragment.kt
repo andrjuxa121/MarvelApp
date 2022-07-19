@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.fragment.app.activityViewModels
 import com.great.app.R
 import com.great.app.databinding.FragmentDetailsBinding
 import com.great.app.model.Character
 import com.great.app.utils.Formater
+import com.great.app.view_model.MainViewModel
 import com.squareup.picasso.Picasso
 
 class DetailsFragment : BaseFragment() {
+
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!

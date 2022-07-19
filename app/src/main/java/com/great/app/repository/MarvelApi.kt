@@ -41,7 +41,7 @@ interface MarvelApi {
         @Query("apikey") apiKey: String = Constant.getApiKey(),
         @Query("hash") hash: String = Constant.getHash(),
         @Query("limit") limit: String = Constant.LIMIT
-    ): Call<DataWrapper>
+    ): DataWrapper
 
     @GET("characters/{characterId}")
     fun getCharacter(
@@ -50,5 +50,5 @@ interface MarvelApi {
         @Query("apikey") apiKey: String = Constant.getApiKey(),
         @Query("hash") hash: String = Constant.getHash(),
         @Query("limit") limit: String = Constant.LIMIT
-    ): Call<DataWrapper>
+    ): DataWrapper
 }

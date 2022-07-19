@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.great.app.databinding.ActivityAppBinding
 import com.great.app.fragment.DetailsFragment
 import com.great.app.fragment.ListFragment
+import com.great.app.repository.Repository
 import com.great.app.repository.getMarvelApiService
 import com.great.app.view_model.MainViewModel
 
@@ -22,8 +23,9 @@ class AppActivity : AppCompatActivity() {
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val repository = Repository(getMarvelApiService())
         ViewModelProvider(
-            this, MainViewModel.FACTORY(getMarvelApiService())
+            this, MainViewModel.FACTORY(repository)
         ).get(MainViewModel::class.java)
 
         setMainPage()

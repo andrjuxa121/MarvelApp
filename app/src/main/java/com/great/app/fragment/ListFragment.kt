@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.great.app.AppActivity
@@ -17,9 +18,13 @@ import com.great.app.adapter.ListAdapter
 import com.great.app.databinding.FragmentListBinding
 import com.great.app.model.Character
 import com.great.app.utils.Keyboard
+import com.great.app.view_model.MainViewModel
+import com.great.app.view_model.ViewModelState
 
 
 class ListFragment : BaseFragment() {
+
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
@@ -49,9 +54,16 @@ class ListFragment : BaseFragment() {
         initListeners()
         subscribeOnCharactersUpdate()
 
+        mainViewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                ViewModelState.Loading -> showProgress(true)
+                is ViewModelState.Error -> showError(state.messageResId)
+                is ViewModelState.Completed -> showProgress(false)
+            }
+        }
+
         if (!mainViewModel.areCharactersAvailable()) {
-            mainViewModel.loadCharacters(responseListener)
-            binding.refreshLayout.isRefreshing = true
+            mainViewModel.loadCharacters()
         }
     }
 
@@ -73,7 +85,7 @@ class ListFragment : BaseFragment() {
 
     private fun initListeners() {
         binding.refreshLayout.setOnRefreshListener {
-            mainViewModel.loadCharacters(responseListener)
+            mainViewModel.loadCharacters()
         }
         binding.btnSearch.setOnClickListener {
             if (!isSearchFieldOpen) {
@@ -85,7 +97,7 @@ class ListFragment : BaseFragment() {
             val characterId = binding.edtSearch.text
             if (characterId.isNotEmpty()) {
                 findCharacter(characterId.toString().toInt())
-            } else showToast(R.string.empty_search_query)
+            } else showError(R.string.empty_search_query)
             false // to hide keyboard
         }
     }
@@ -168,10 +180,7 @@ class ListFragment : BaseFragment() {
 
     private fun findCharacter(characterId: Int) {
         Keyboard.hide(requireActivity())
-        mainViewModel.loadCharacter(
-            characterId,
-            responseListener
-        )
+        mainViewModel.loadCharacter(characterId)
         openDetailsFragment()
     }
 
@@ -180,5 +189,9 @@ class ListFragment : BaseFragment() {
             val detailsFragment = DetailsFragment()
             (requireActivity() as AppActivity).openFragment(detailsFragment)
         }
+    }
+
+    fun showProgress(value: Boolean) {
+        binding.refreshLayout.isRefreshing = value
     }
 }
