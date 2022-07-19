@@ -36,7 +36,7 @@ fun getMarvelApiService() = apiService
 
 interface MarvelApi {
     @GET("characters")
-    fun getCharacters(
+    suspend fun getCharacters(
         @Query("ts") timeStamp: String = Constant.TIME_STAMP,
         @Query("apikey") apiKey: String = Constant.getApiKey(),
         @Query("hash") hash: String = Constant.getHash(),
@@ -44,7 +44,7 @@ interface MarvelApi {
     ): DataWrapper
 
     @GET("characters/{characterId}")
-    fun getCharacter(
+    suspend fun getCharacter(
         @Path("characterId") characterId: Int,
         @Query("ts") timeStamp: String = Constant.TIME_STAMP,
         @Query("apikey") apiKey: String = Constant.getApiKey(),

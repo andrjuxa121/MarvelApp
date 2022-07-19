@@ -3,6 +3,7 @@ package com.great.app.fragment
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +63,7 @@ class ListFragment : BaseFragment() {
             }
         }
 
+        Log.d("111", "areCharactersAvailable: "+mainViewModel.areCharactersAvailable())
         if (!mainViewModel.areCharactersAvailable()) {
             mainViewModel.loadCharacters()
         }
@@ -111,7 +113,6 @@ class ListFragment : BaseFragment() {
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun updateUi(characters: List<Character>) {
         val listAdapter = ListAdapter(requireActivity(), characters)
         listAdapter.notifyDataSetChanged()
@@ -123,7 +124,6 @@ class ListFragment : BaseFragment() {
                 }
             })
         binding.recyclerView.adapter = listAdapter
-        binding.refreshLayout.isRefreshing = false
     }
 
     private fun updateSearchFiledPivot() {
@@ -192,6 +192,7 @@ class ListFragment : BaseFragment() {
     }
 
     fun showProgress(value: Boolean) {
+        Log.d("111", "showProgress: "+value)
         binding.refreshLayout.isRefreshing = value
     }
 }

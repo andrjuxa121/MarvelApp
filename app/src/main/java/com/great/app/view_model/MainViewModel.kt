@@ -61,11 +61,6 @@ class MainViewModel(
         }
     }
 
-    interface IResponseListener {
-        fun onSuccess()
-        fun onFailure(messageResId: Int)
-    }
-
     companion object {
         val FACTORY = singleArgViewModelFactory(::MainViewModel)
     }
