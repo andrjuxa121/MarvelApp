@@ -12,8 +12,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val BASE_URL = "https://alerts.com.ua/"
-
 private val apiService: MarvelApi by lazy {
 
     val loggingInterceptor = HttpLoggingInterceptor()
@@ -26,7 +24,7 @@ private val apiService: MarvelApi by lazy {
     }.build()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(Constant.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

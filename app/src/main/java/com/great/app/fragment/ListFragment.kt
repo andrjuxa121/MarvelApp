@@ -11,7 +11,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import AppActivity
+import com.great.app.AppActivity
 import com.great.app.R
 import com.great.app.adapter.ListAdapter
 import com.great.app.databinding.FragmentListBinding
