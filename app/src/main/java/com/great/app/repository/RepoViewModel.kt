@@ -1,9 +1,6 @@
 package com.great.app.repository
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -52,7 +49,7 @@ class RepoViewModel(application: Application): AndroidViewModel(application) {
                     responseListener.onSuccess()
                     return
                 }
-                responseListener.onFailure(R.string.empty_response)
+                responseListener.onFailure(R.string.data_not_found)
             }
         })
     }
@@ -76,7 +73,7 @@ class RepoViewModel(application: Application): AndroidViewModel(application) {
                     responseListener.onSuccess()
                     return
                 }
-                responseListener.onFailure(R.string.empty_response)
+                responseListener.onFailure(R.string.data_not_found)
             }
         })
     }

@@ -2,7 +2,7 @@
     <string name="app_name">MarvelApp</string>
     <string name="no_response">No response. Make sure you have a good Internet connection</string>
     <string name="bad_request">Sorry. Bad request</string>
-    <string name="empty_response">Response is empty</string>
+    <string name="data_not_found">Data not found</string>
     <string name="no_information">No information</string>
     <string name="empty_search_query">Search query is empty</string>
 

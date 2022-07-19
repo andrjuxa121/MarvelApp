@@ -91,12 +91,12 @@ class ListFragment : BaseFragment() {
     }
 
     private fun subscribeOnCharactersUpdate() {
-        repoViewModel.characters.observe(viewLifecycleOwner, { nullableCharacters ->
+        repoViewModel.characters.observe(viewLifecycleOwner) { nullableCharacters ->
             nullableCharacters?.let { characters ->
                 (requireActivity() as AppActivity).clearBackground()
                 updateUi(characters)
             }
-        })
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
