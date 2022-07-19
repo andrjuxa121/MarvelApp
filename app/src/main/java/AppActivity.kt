@@ -3,10 +3,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.great.app.R
 import com.great.app.databinding.ActivityAppBinding
 import com.great.app.fragment.DetailsFragment
 import com.great.app.fragment.ListFragment
+import com.great.app.repository.getMarvelApiService
+import com.great.app.view_model.MainViewModel
 
 
 class AppActivity : AppCompatActivity() {
@@ -17,6 +20,11 @@ class AppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewModelProvider(
+            this, MainViewModel.FACTORY(getMarvelApiService())
+        ).get(MainViewModel::class.java)
+
         setMainPage()
     }
 
@@ -30,7 +38,8 @@ class AppActivity : AppCompatActivity() {
 
     fun openFragment(fragment: Fragment) {
         clearOldFragments(
-            supportFragmentManager.beginTransaction())
+            supportFragmentManager.beginTransaction()
+        )
             .add(R.id.lay_main, fragment)
             .addToBackStack(fragment.javaClass.name)
             .commit()
@@ -51,14 +60,16 @@ class AppActivity : AppCompatActivity() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             val listFragment = ListFragment()
             clearOldFragments(
-                supportFragmentManager.beginTransaction())
+                supportFragmentManager.beginTransaction()
+            )
                 .add(R.id.lay_main, listFragment)
                 .commit()
         } else {
             val listFragment = ListFragment()
             val detailsFragment = DetailsFragment()
             clearOldFragments(
-                supportFragmentManager.beginTransaction())
+                supportFragmentManager.beginTransaction()
+            )
                 .add(R.id.lay_main, listFragment)
                 .add(R.id.lay_main, detailsFragment)
                 .commit()

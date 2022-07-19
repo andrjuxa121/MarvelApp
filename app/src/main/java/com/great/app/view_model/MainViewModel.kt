@@ -7,6 +7,7 @@ import com.great.app.R
 import com.great.app.model.Character
 import com.great.app.model.DataWrapper
 import com.great.app.repository.MarvelApi
+import com.great.app.utils.singleArgViewModelFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -79,5 +80,9 @@ class MainViewModel(
     interface IResponseListener {
         fun onSuccess()
         fun onFailure(messageResId: Int)
+    }
+
+    companion object {
+        val FACTORY = singleArgViewModelFactory(::MainViewModel)
     }
 }

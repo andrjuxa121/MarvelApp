@@ -14,7 +14,7 @@ import retrofit2.http.Query
 
 private const val BASE_URL = "https://alerts.com.ua/"
 
-private val marvelApi: MarvelApi by lazy {
+private val apiService: MarvelApi by lazy {
 
     val loggingInterceptor = HttpLoggingInterceptor()
     loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -33,6 +33,8 @@ private val marvelApi: MarvelApi by lazy {
 
     retrofit.create(MarvelApi::class.java)
 }
+
+fun getMarvelApiService() = apiService
 
 interface MarvelApi {
     @GET("characters")
