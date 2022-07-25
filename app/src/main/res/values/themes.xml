@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TestApp" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.MarvelApp" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/c_black_light</item>
         <item name="colorPrimaryVariant">@color/c_black_dark</item>
