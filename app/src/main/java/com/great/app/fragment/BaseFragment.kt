@@ -21,7 +21,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = getViewBinding()
+        _binding = getViewBinding(inflater, container)
         val rootView = binding.root
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -46,5 +46,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         ).show()
     }
 
-    protected abstract fun getViewBinding(): VB
+    protected abstract fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): VB
 }

@@ -1,7 +1,9 @@
 package com.great.app.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.great.app.R
 import com.great.app.databinding.FragmentDetailsBinding
@@ -14,8 +16,13 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
 
     private val mainViewModel by activityViewModels<MainViewModel>()
 
-    override fun getViewBinding(): FragmentDetailsBinding {
-        return FragmentDetailsBinding.inflate(layoutInflater)
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentDetailsBinding {
+        return FragmentDetailsBinding.inflate(
+            inflater, container, false
+        )
     }
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {

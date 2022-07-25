@@ -3,7 +3,9 @@ package com.great.app.fragment
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.great.app.AppActivity
 import com.great.app.R
 import com.great.app.adapter.ListAdapter
+import com.great.app.databinding.FragmentDetailsBinding
 import com.great.app.databinding.FragmentListBinding
 import com.great.app.model.Character
 import com.great.app.utils.Keyboard
@@ -26,8 +29,13 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
     private var isSearchFieldOpen = false
     private val animationDuration: Long = 300 // ms
 
-    override fun getViewBinding(): FragmentListBinding {
-        return FragmentListBinding.inflate(layoutInflater)
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentListBinding {
+        return FragmentListBinding.inflate(
+            inflater, container, false
+        )
     }
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
