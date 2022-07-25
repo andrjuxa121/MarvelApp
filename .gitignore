@@ -8,3 +8,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+/app/src/main/java/com/great/app/repository/ApiKeys.kt
