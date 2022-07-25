@@ -73,7 +73,7 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
             if (characterId.isNotEmpty()) {
                 findCharacter(characterId.toString().toInt())
             } else showError(R.string.empty_search_query)
-            false // to hide keyboard
+            true // to consume the action
         }
     }
 
