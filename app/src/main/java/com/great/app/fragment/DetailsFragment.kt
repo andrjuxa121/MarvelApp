@@ -27,31 +27,23 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
     }
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
-        mainViewModel.character.observe(viewLifecycleOwner) { nullableCharacter ->
-            updateUi(nullableCharacter)
+        mainViewModel.character.observe(viewLifecycleOwner) { character ->
+            character?.apply { updateUi(this) }
         }
     }
 
-    private fun updateUi(nullableCharacter: Character?) {
-        nullableCharacter?.let { character ->
-            Picasso.get()
-                .load(Formater.getImageUrl(character.thumbnail))
-                .into(binding.imgCharacterProfile)
-            binding.tvCharacterId.text = character.id.toString()
-            binding.tvCharacterName.text = character.name
-            binding.tvCharacterDescription.text = character.description
-            var nameOfComics = ""
-            character.comics?.items?.forEachIndexed { index, item ->
-                nameOfComics += "${index + 1}. ${item.name}\n"
-            }
-            binding.tvCharacterInComics.text = nameOfComics
-            return
+    private fun updateUi(character: Character) {
+        Picasso.get()
+            .load(Formater.getImageUrl(character.thumbnail))
+            .into(binding.imgCharacterProfile)
+        binding.tvCharacterId.text = character.id.toString()
+        binding.tvCharacterName.text = character.name
+        binding.tvCharacterDescription.text = character.description
+        var nameOfComics = ""
+        character.comics?.items?.forEachIndexed { index, item ->
+            nameOfComics += "${index + 1}. ${item.name}\n"
         }
-        binding.imgCharacterProfile.setImageResource(R.drawable.img_not_found)
-        binding.tvCharacterId.setText(R.string.no_information)
-        binding.tvCharacterName.setText(R.string.no_information)
-        binding.tvCharacterDescription.setText(R.string.no_information)
-        binding.tvCharacterInComics.setText(R.string.no_information)
+        binding.tvCharacterInComics.text = nameOfComics
     }
 
     override fun onBackPressed() {

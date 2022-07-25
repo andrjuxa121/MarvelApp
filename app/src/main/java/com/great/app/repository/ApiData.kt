@@ -19,3 +19,8 @@ object ApiCredentials {
         toString(16).padStart(32, '0')
     }
 }
+
+object ErrorCode {
+    const val UNAUTHORIZED = 401
+    const val NOT_FOUND = 404
+}
