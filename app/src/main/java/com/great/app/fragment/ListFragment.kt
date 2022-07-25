@@ -174,7 +174,7 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
         }
     }
 
-    fun showProgress(value: Boolean) {
+    private fun showProgress(value: Boolean) {
         binding.refreshLayout.isRefreshing = value
     }
 
