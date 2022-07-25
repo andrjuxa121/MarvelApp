@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.great.app.AppActivity
 import com.great.app.R
 import com.great.app.adapter.ListAdapter
-import com.great.app.databinding.FragmentDetailsBinding
 import com.great.app.databinding.FragmentListBinding
 import com.great.app.model.Character
 import com.great.app.utils.Keyboard
@@ -41,17 +40,8 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
         initViews()
         initListeners()
-        subscribeOnCharactersUpdate()
+        observeData()
 
-        mainViewModel.state.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                ViewModelState.Loading -> showProgress(true)
-                is ViewModelState.Error -> showError(state.messageResId)
-                is ViewModelState.Completed -> showProgress(false)
-            }
-        }
-
-        Log.d("111", "areCharactersAvailable: " + mainViewModel.areCharactersAvailable())
         if (!mainViewModel.areCharactersAvailable()) {
             mainViewModel.loadCharacters()
         }
@@ -87,11 +77,23 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
         }
     }
 
-    private fun subscribeOnCharactersUpdate() {
-        mainViewModel.characters.observe(viewLifecycleOwner) { nullableCharacters ->
-            nullableCharacters?.let { characters ->
-                (requireActivity() as AppActivity).clearBackground()
-                updateUi(characters)
+    private fun observeData() {
+        mainViewModel.apply {
+            state.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    ViewModelState.Loading -> showProgress(true)
+                    is ViewModelState.Error -> showError(state.messageResId)
+                    is ViewModelState.Completed -> showProgress(false)
+                }
+            }
+            characters.observe(viewLifecycleOwner) { characters ->
+                characters?.apply {
+                    (requireActivity() as AppActivity).clearBackground()
+                    updateUi(this)
+                }
+            }
+            character.observe(viewLifecycleOwner) { character ->
+                character?.apply { openDetailsFragment() }
             }
         }
     }
@@ -103,7 +105,6 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
             object : ListAdapter.ICharacterClickListener {
                 override fun onClick(character: Character) {
                     mainViewModel.setCharacter(character)
-                    openDetailsFragment()
                 }
             })
         binding.recyclerView.adapter = listAdapter
@@ -164,7 +165,6 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
     private fun findCharacter(characterId: Int) {
         Keyboard.hide(requireActivity())
         mainViewModel.loadCharacter(characterId)
-        openDetailsFragment()
     }
 
     private fun openDetailsFragment() {
@@ -175,7 +175,10 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
     }
 
     fun showProgress(value: Boolean) {
-        Log.d("111", "showProgress: " + value)
         binding.refreshLayout.isRefreshing = value
+    }
+
+    override fun onBackPressed() {
+        Log.e("111", "OnBackPressed: $this")
     }
 }

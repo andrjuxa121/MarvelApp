@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.great.app.databinding.ActivityAppBinding
+import com.great.app.fragment.BaseFragment
 import com.great.app.fragment.DetailsFragment
 import com.great.app.fragment.ListFragment
 import com.great.app.repository.Repository
@@ -32,17 +33,22 @@ class AppActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            supportFragmentManager.popBackStack()
-            return
+        val orientation = resources.configuration.orientation
+        val isBackStackEmpty = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (supportFragmentManager.fragments.isNotEmpty()) {
+                val fragment = supportFragmentManager.fragments.last() as BaseFragment<*>
+                fragment.onBackPressed()
+            }
+            !supportFragmentManager.popBackStackImmediate()
+        } else true
+
+        if (isBackStackEmpty) {
+            super.onBackPressed()
         }
-        super.onBackPressed()
     }
 
     fun openFragment(fragment: Fragment) {
-        clearOldFragments(
-            supportFragmentManager.beginTransaction()
-        )
+        clearOldFragments(supportFragmentManager.beginTransaction())
             .add(R.id.lay_main, fragment)
             .addToBackStack(fragment.javaClass.name)
             .commit()
@@ -62,17 +68,13 @@ class AppActivity : AppCompatActivity() {
     private fun setMainPage() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             val listFragment = ListFragment()
-            clearOldFragments(
-                supportFragmentManager.beginTransaction()
-            )
+            clearOldFragments(supportFragmentManager.beginTransaction())
                 .add(R.id.lay_main, listFragment)
                 .commit()
         } else {
             val listFragment = ListFragment()
             val detailsFragment = DetailsFragment()
-            clearOldFragments(
-                supportFragmentManager.beginTransaction()
-            )
+            clearOldFragments(supportFragmentManager.beginTransaction())
                 .add(R.id.lay_main, listFragment)
                 .add(R.id.lay_main, detailsFragment)
                 .commit()

@@ -35,7 +35,7 @@ class MainViewModel(
         }
     }
 
-    fun setCharacter(character: Character) {
+    fun setCharacter(character: Character?) {
         _character.value = character
     }
 

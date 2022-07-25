@@ -1,6 +1,7 @@
 package com.great.app.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,5 +52,10 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
         binding.tvCharacterName.setText(R.string.no_information)
         binding.tvCharacterDescription.setText(R.string.no_information)
         binding.tvCharacterInComics.setText(R.string.no_information)
+    }
+
+    override fun onBackPressed() {
+        Log.e("111", "OnBackPressed: $this")
+        mainViewModel.setCharacter(null)
     }
 }

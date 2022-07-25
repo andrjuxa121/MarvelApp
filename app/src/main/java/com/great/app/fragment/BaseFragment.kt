@@ -50,4 +50,5 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): VB
+    public abstract fun onBackPressed();
 }
