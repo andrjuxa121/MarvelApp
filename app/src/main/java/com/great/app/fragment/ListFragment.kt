@@ -62,6 +62,14 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
         binding.refreshLayout.setOnRefreshListener {
             mainViewModel.loadCharacters()
         }
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(1)) { // bottom
+                    mainViewModel.loadMoreCharacters()
+                }
+            }
+        })
         binding.btnSearch.setOnClickListener {
             if (!isSearchFieldOpen) {
                 showSearchFiled()
@@ -89,7 +97,7 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
             characters.observe(viewLifecycleOwner) { characters ->
                 characters?.apply {
                     (requireActivity() as AppActivity).clearBackground()
-                    updateUi(this)
+                    displayCharacters(this)
                 }
             }
             character.observe(viewLifecycleOwner) { character ->
@@ -98,16 +106,21 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
         }
     }
 
-    private fun updateUi(characters: List<Character>) {
-        val listAdapter = ListAdapter(requireActivity(), characters)
-        listAdapter.notifyDataSetChanged()
-        listAdapter.initCharacterClickListener(
-            object : ListAdapter.ICharacterClickListener {
-                override fun onClick(character: Character) {
-                    mainViewModel.setCharacter(character)
-                }
-            })
-        binding.recyclerView.adapter = listAdapter
+    private fun displayCharacters(characters: List<Character>) {
+        when (val adapter = binding.recyclerView.adapter) {
+            is ListAdapter -> adapter.updateCharacters(characters)
+            else -> {
+                val listAdapter = ListAdapter(requireActivity(), characters)
+                listAdapter.notifyDataSetChanged()
+                listAdapter.initCharacterClickListener(
+                    object : ListAdapter.ICharacterClickListener {
+                        override fun onClick(character: Character) {
+                            mainViewModel.setCharacter(character)
+                        }
+                    })
+                binding.recyclerView.adapter = listAdapter
+            }
+        }
     }
 
     private fun updateSearchFiledPivot() {

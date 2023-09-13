@@ -15,10 +15,19 @@ import com.squareup.picasso.Picasso
 
 class ListAdapter(
     private val context: Context,
-    private val characters: List<Character>
+    private var characters: List<Character>
 ) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     private var characterClickListener: ICharacterClickListener? = null
+
+    fun updateCharacters(
+        newCharacters: List<Character>
+    ) {
+        val oldSize = characters.size
+        val countOfInserted = newCharacters.size - characters.size
+        characters = newCharacters
+        notifyItemRangeInserted(oldSize, countOfInserted)
+    }
 
     fun initCharacterClickListener(listener: ICharacterClickListener) {
         characterClickListener = listener
