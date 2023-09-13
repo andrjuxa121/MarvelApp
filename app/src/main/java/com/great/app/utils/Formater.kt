@@ -5,7 +5,8 @@ import com.great.app.model.Image
 class Formater {
     companion object {
         fun getImageUrl(image: Image?): String {
-            return "${image?.path}.${image?.extension}"
+            val imagePath = image?.path?.replace("http", "https")
+            return "$imagePath.${image?.extension}"
         }
     }
 }
