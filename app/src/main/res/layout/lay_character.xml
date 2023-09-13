@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bg_plate"
-    android:orientation="vertical"
-    android:gravity="center"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_plate"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/img_characterProfile"
-        android:src="@drawable/img_not_found"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="300dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_not_found" />
 
     <View
-        android:background="@color/c_red_light"
         android:layout_width="match_parent"
-        android:layout_height="5dp"/>
+        android:layout_height="5dp"
+        android:background="@color/c_red_light" />
 
     <TextView
         android:id="@+id/tv_characterName"
-        android:background="@drawable/bg_plate"
         style="@style/text_title"
-        android:textColor="@color/c_white_light"
-        android:maxLength="20"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="@string/data_not_found"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp10"
-        android:layout_marginBottom="@dimen/dp10"/>
+        android:layout_marginBottom="@dimen/dp10"
+        android:gravity="center"
+        android:maxLength="20"
+        android:padding="5dp"
+        android:text="@string/data_not_found"
+        android:textColor="@color/c_white_light" />
 </LinearLayout>
