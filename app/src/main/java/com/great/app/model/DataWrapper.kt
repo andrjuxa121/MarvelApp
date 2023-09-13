@@ -1,5 +1,5 @@
 package com.great.app.model
 
 data class DataWrapper (
-    var data: Data?
+    var data: Data = Data()
 )

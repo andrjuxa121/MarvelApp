@@ -1,5 +1,6 @@
 package com.great.app.model
 
 data class Data (
-    var results: List<Character>? = null
+    val total: Int = 0,
+    var results: List<Character> = emptyList()
 )
