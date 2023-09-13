@@ -35,10 +35,11 @@ fun getMarvelApiService() = apiService
 interface MarvelApi {
     @GET("characters")
     suspend fun getCharacters(
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int,
         @Query("ts") timeStamp: String = ApiCredentials.TIME_STAMP,
         @Query("apikey") apiKey: String = ApiCredentials.getApiKey(),
-        @Query("hash") hash: String = ApiCredentials.getHash(),
-        @Query("limit") limit: String = ApiCredentials.LIMIT
+        @Query("hash") hash: String = ApiCredentials.getHash()
     ): DataWrapper
 
     @GET("characters/{characterId}")
@@ -47,6 +48,5 @@ interface MarvelApi {
         @Query("ts") timeStamp: String = ApiCredentials.TIME_STAMP,
         @Query("apikey") apiKey: String = ApiCredentials.getApiKey(),
         @Query("hash") hash: String = ApiCredentials.getHash(),
-        @Query("limit") limit: String = ApiCredentials.LIMIT
     ): DataWrapper
 }

@@ -7,7 +7,6 @@ import java.sql.Timestamp
 object ApiCredentials {
     const val BASE_URL = "https://gateway.marvel.com/v1/public/"
     val TIME_STAMP = Timestamp(System.currentTimeMillis()).time.toString()
-    const val LIMIT = "20"
 
     fun getApiKey(): String {
         return ApiKeys.PUBLIC_KEY

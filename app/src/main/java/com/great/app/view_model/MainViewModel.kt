@@ -29,7 +29,22 @@ class MainViewModel(
 
     fun loadCharacters() {
         withLoading {
+            repository.resetFetchOffset()
             _characters.value = repository.loadCharacters()
+        }
+    }
+
+    fun loadMoreCharacters() {
+        withLoading {
+            if (repository.increaseFetchOffset()) {
+                val newCharacters = repository.loadCharacters()
+
+                val allCharacters = mutableListOf<Character>()
+                _characters.value?.let { allCharacters.addAll(it) }
+                allCharacters.addAll(newCharacters)
+
+                _characters.value = allCharacters
+            }
         }
     }
 
