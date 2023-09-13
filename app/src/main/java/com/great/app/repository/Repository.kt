@@ -8,13 +8,13 @@ class Repository(private val marvelApi: MarvelApi) {
 
     suspend fun loadCharacters(): List<Character> {
         return withErrorCheck {
-            marvelApi.getCharacters().data!!.results!!
+            marvelApi.getCharacters().data.results
         }
     }
 
     suspend fun loadCharacter(id: Int): Character {
         return withErrorCheck {
-            marvelApi.getCharacter(id).data!!.results!!.get(0)
+            marvelApi.getCharacter(id).data.results[0]
         }
     }
 

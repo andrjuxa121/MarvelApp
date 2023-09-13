@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.great.app.R
 import com.great.app.databinding.FragmentDetailsBinding
 import com.great.app.model.Character
 import com.great.app.utils.Formater
@@ -40,7 +39,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
         binding.tvCharacterName.text = character.name
         binding.tvCharacterDescription.text = character.description
         var nameOfComics = ""
-        character.comics?.items?.forEachIndexed { index, item ->
+        character.comics.items.forEachIndexed { index, item ->
             nameOfComics += "${index + 1}. ${item.name}\n"
         }
         binding.tvCharacterInComics.text = nameOfComics
