@@ -28,10 +28,8 @@ class MainViewModel(
     }
 
     fun loadCharacters() {
-        viewModelScope.launch {
-            withLoading {
-                _characters.value = repository.loadCharacters()
-            }
+        withLoading {
+            _characters.value = repository.loadCharacters()
         }
     }
 
@@ -40,24 +38,24 @@ class MainViewModel(
     }
 
     fun loadCharacter(id: Int) {
-        viewModelScope.launch {
-            withLoading {
-                _character.value = repository.loadCharacter(id)
-            }
+        withLoading {
+            _character.value = repository.loadCharacter(id)
         }
     }
 
-    private suspend fun withLoading(
+    private fun withLoading(
         block: suspend () -> Unit
     ) {
-        try {
-            _state.value = ViewModelState.Loading
-            block()
-        } catch (e: RepositoryError) {
-            e.printStackTrace()
-            _state.value = ViewModelState.Error(e.messageResId)
-        } finally {
-            _state.value = ViewModelState.Completed
+        viewModelScope.launch {
+            try {
+                _state.value = ViewModelState.Loading
+                block()
+            } catch (e: RepositoryError) {
+                e.printStackTrace()
+                _state.value = ViewModelState.Error(e.messageResId)
+            } finally {
+                _state.value = ViewModelState.Completed
+            }
         }
     }
 
